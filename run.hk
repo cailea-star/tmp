@@ -1,0 +1,263 @@
+#!/bin/bash
+# run.hk to run highk, pack and gamlat
+
+##Input data
+usage()
+{
+cat<<_END_
+***************************************README*************************************************
+* ITAUX must be 2 here.                                                                      *
+* Input like below (5 or 7 parameters, <ZPS> and <NPS> optional to mark the configuration):  *
+* run.hk [ <DZ> <GZ> (<ZPS>) <DN> <GN> (<NPS>) <MK> ]                                        *
+**********************************************************************************************
+_END_
+}
+#
+if [ $# -eq 5 -o $# -eq 7 ]; then
+ ITAUX=2
+ if [ $# -eq 5 ]; then
+  DZ=$1
+  GZ=$2
+  DN=$3
+  GN=$4
+  MK=$5
+ elif [ $# -eq 7 ]; then
+  DZ=$1
+  GZ=$2
+  ZPS=$3
+  DN=$4
+  GN=$5
+  NPS=$6
+  MK=$7
+ fi
+#
+# Fixing Z0 and N0 by setting FC=1
+ FC=0
+ if [ $FC -eq 1 ]; then
+ Z0=84
+ N0=126
+
+# otherwise calculating automatically 
+ else
+ Z0=`expr $(( $DZ + $GZ )) / 2`
+ N0=`expr $(( $DN + $GN )) / 2`
+ fi
+#
+ if [ $Z0 -gt 80 ]; then
+  CUTZ1=`expr $Z0 / 2 - 39`
+  CUTZ2=`expr $Z0 / 2 + 40`
+ else
+  CUTZ1=1
+  CUTZ2=`expr $(( $Z0 / 2 )) + $(( $Z0 / 2 ))`
+ fi
+
+ if [ $N0 -gt 80 ]; then
+  CUTN1=`expr $N0 / 2 - 39`
+  CUTN2=`expr $N0 / 2 + 40`
+ else
+  CUTN1=1
+  CUTN2=`expr $(( $N0 / 2 )) + $(( $N0 / 2 ))`
+ fi
+#
+ echo ITAUX=$ITAUX
+ echo DZ=$DZ, GZ=$GZ, ZPS=$ZPS
+ echo DN=$DN, GN=$GN, NPS=$NPS
+ echo Z0=$Z0, N0=$N0, MK=$MK
+ echo CUTZ1=$CUTZ1, CUTZ2=$CUTZ2
+ echo CUTN1=$CUTN1, CUTN2=$CUTN2
+##Input end
+
+##Config data
+# File names
+FN_HIGHK_OUTPUT="output/hk-z$DZ-$GZ$ZPS-n$DN-$GN$NPS-$MK.out"
+FN_HIGHK_DATA="data/hk-z$DZ-$GZ$ZPS-n$DN-$GN$NPS-$MK"
+FN_PACK_OUTPUT="output/pack-z$DZ-$GZ$ZPS-n$DN-$GN$NPS-$MK.out"
+FN_GAMLAT_OUTPUT="output/gamlat-z$DZ-$GZ$ZPS-n$DN-$GN$NPS-$MK.out"
+
+# Count of B4 values
+COUNT=3
+
+# Initialize B4 values
+start_B4=-0.059
+step_B4=0.02
+##Config end
+
+##Run highk
+ind=1
+
+rm -f $FN_HIGHK_OUTPUT
+
+while [ $ind -le $COUNT ]; do
+
+db4=`echo "$start_B4 + $step_B4 * ( $ind -1)" | bc -l`
+
+if [ $ind -eq 1 ]; then
+n_NPPS=0
+n_NPNS=0
+n_PPPS=0
+n_PPNS=0
+p_NPPS=0
+p_NPNS=0
+p_PPPS=0
+p_PPNS=0
+elif [ $ind -eq 2 ]; then
+n_NPPS=0
+n_NPNS=0
+n_PPPS=0
+n_PPNS=0
+p_NPPS=0
+p_NPNS=0
+p_PPPS=0
+p_PPNS=0
+elif [ $ind -eq 3 ]; then
+n_NPPS=0
+n_NPNS=0
+n_PPPS=0
+n_PPNS=0
+p_NPPS=0
+p_NPNS=0
+p_PPPS=0
+p_PPNS=0
+fi
+
+echo b1=
+echo b2=
+echo b3=
+echo B4=$db4
+
+echo RUNNING HIGHK ......
+highk<< END_OF_INPUT >>$FN_HIGHK_OUTPUT
+ \$DEFFI NB2=8, NGA=8, BET20=0.13,GAM0=0.075, NAZWIT=4,
+        DB2=0.02, DGA=0.02, NNNSTP=2, NNPSTP=2,
+        DB4=$db4, NNNDP=$DZ, NNNGP=$GZ, NNNDN=$DN, NNNGN=$GN \$
+ \$INPUT NMAXP=12, NMAXN=14, IZ0=$Z0, IN0=$N0, IDIM=135,
+        OMCRN=0.22, OMCRP=0.22, OMEGIN=0.0, IDECOM=0,
+        STEPOM=0.05, ILOM=1, IPRINT=0, NCUTDN=$CUTN1, IEX=4,
+        NCUTGN=$CUTN2, NCUTDP=$CUTZ1, NCUTGP=$CUTZ2, FIXP=1.0, FIXN=1.0,
+        GFAC=1.0, ITAUX=$ITAUX, IPLOT=0, ICHECK=0, KPAIR=1,
+        DFACTN=1.00, DFACTP=1.0 \$
+ \$SWITCH  ILIPEK=1, IHART=1, IDEFC=0, B2CON=0.234, GACON=0.179,
+        B4CON=0.002,
+        G20F=1.0, G21F=1.0, G22F=1.0  \$
+ \$CONFIG  NQNPPS(1,1)=$n_NPPS,NQNPPS(1,2)=0,NQNPPS(1,3)=0,
+          NQNPNS(1,1)=$n_NPNS,NQNPNS(1,2)=0,NQNPNS(1,3)=0,
+          NQPPPS(1,1)=$n_PPPS,NQPPPS(1,2)=0,NQPPPS(1,3)=0,
+          NQPPNS(1,1)=$n_PPNS,NQPPNS(1,2)=0,NQPPNS(1,3)=0,
+          NQNPPS(2,1)=$p_NPPS,NQNPPS(2,2)=0,NQNPPS(2,3)=0,
+          NQNPNS(2,1)=$p_NPNS,NQNPNS(2,2)=0,NQNPNS(2,3)=0,
+          NQPPPS(2,1)=$p_PPPS,NQPPPS(2,2)=0,NQPPPS(2,3)=0,
+          NQPPNS(2,1)=$p_PPNS,NQPPNS(2,2)=0,NQPPNS(2,3)=0 \$
+END_OF_INPUT
+mv fort.10 $FN_HIGHK_DATA-$ind.dat
+
+ind=`expr $ind + 1`
+done
+##Highk end
+
+##Run msc
+ind=1
+indm=3
+while [ $ind -le $indm ]; do
+
+FN_IF_DATA=data/hk-z$DZ-$GZ$ZPS-n$DN-$GN$NPS-$MK-$ind.dat
+FN_IF_DATA_M=data/hk-z$DZ-$GZ$ZPS-n$DN-$GN$NPS-$MK-$ind-m.dat
+
+cp $FN_IF_DATA $FN_IF_DATA_M
+
+echo RUNNING MSC ......
+msc<< END_OF_INPUT
+$FN_IF_DATA_M
+$FN_IF_DATA
+END_OF_INPUT
+
+rm $FN_IF_DATA_M
+
+ind=`expr $ind + 1`
+done
+##Msc end
+
+##Run pack
+ind=1
+
+rm -f $FN_PACK_OUTPUT
+
+while [ $ind -le $COUNT ]; do
+echo RUNNING PACK ......
+pack<< END_OF_INPUT >>$FN_PACK_OUTPUT
+$FN_HIGHK_DATA-$ind.dat
+$MK
+$ind,$ITAUX,$COUNT
+END_OF_INPUT
+
+ind=`expr $ind + 1`
+done
+
+if [ $ITAUX -eq 0 ]; then
+   IN=$DN
+   while [ $IN -le $GN ]; do
+   mv n_$MK\_$IN zndat/n-$IN$NPS-$MK
+   IN=`expr $IN + 2`
+   done
+elif [ $ITAUX -eq 1 ]; then
+   IZ=$DZ
+   while [ $IZ -le $GZ ]; do
+   mv z_$MK\_$IZ zndat/z-$IZ$ZPS-$MK
+   IZ=`expr $IZ + 2`
+   done
+elif [ $ITAUX -eq 2 ]; then
+   IN=$DN
+   while [ $IN -le $GN ]; do
+   mv n_$MK\_$IN zndat/n-$IN$NPS-$MK
+   IN=`expr $IN + 2`
+   done
+   IZ=$DZ
+   while [ $IZ -le $GZ ]; do
+   mv z_$MK\_$IZ zndat/z-$IZ$ZPS-$MK
+   IZ=`expr $IZ + 2`
+   done
+fi
+#Pack end
+
+##Run gamlat
+IZ=$DZ
+while [ $IZ -le $GZ ]; do
+ IN=$DN
+ while [ $IN -le $GN ]; do
+FN_SUR="sur/sur-z$IZ$ZPS-n$IN$NPS-$MK.dat"
+FN_TAB="tab/tab-z$IZ$ZPS-n$IN$NPS-$MK.dat"
+FN_MTAB="tab/mtab-z$IZ$ZPS-n$IN$NPS-$MK.dat" 
+
+ln -fs zndat/n-$IN$NPS-$MK  fort.11
+ln -fs zndat/z-$IZ$ZPS-$MK  fort.13
+echo RUNNING GAMLAT ......
+gamlat<< END_OF_INPUT >$FN_GAMLAT_OUTPUT
+ \$RUN ITAB=-1, ITYP=0, IPAIR=1,
+     STRUT=1.23, IONE=2, IDEF=-1, I4=-1, ISTA=-4, ISTO=21,
+      IXSTA=-1, IMIG=0, NIN=2, IFOLD=0 \$
+ \$CONFIG  NQNPPS(2,1)=0, NQPPPS(1,1)=0 NQNPNS(1,1)=0 \$
+END_OF_INPUT
+
+mv fort.12 $FN_SUR
+mv fort.14 $FN_TAB
+#mv fort.16 $FN_MTAB
+
+rm -f fort.*
+
+# Make links
+#ln -fs $FN_SUR sur.dat
+#ln -fs $FN_TAB tab.dat
+#ln -fs $FN_MTAB mtab.dat
+
+  IN=`expr $IN + 2`
+ done
+ IZ=`expr $IZ + 2`
+done
+##Gamlat end
+
+else
+  echo INPUT ERROR
+  usage
+fi
+
+##End of run.hk
+##Written by H.L.Liu on 2005.4.10
