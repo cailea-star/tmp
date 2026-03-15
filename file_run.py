@@ -6,7 +6,6 @@ KEY_BLOCKING_LEVELS = ["if [ $ind -eq 1 ]; then",
              "elif [ $ind -eq 3 ]; then"]
 
 
-KEY_SH_NAME = "Ds267-HKpr1n2p"
 KEY_SH_COMMANDS = ["run.hk", "run.mp"]
 
 blocking_levels = {
@@ -57,14 +56,14 @@ def replace_blocking_levels(blocking_levels, index, file_path="run.hk"):
         file.writelines(lines)
 
 
-def replace_sh_command(number, file_path="run.sh"):
+def replace_sh_command(KEY_NAME, number, file_path="run.sh"):
     """替换run.sh中对应的命令(run.hk或run.mp)，将KEY_SH_NAME后的计数器替换为number
     """
     with open(file_path, 'r') as file:
         lines = file.readlines()
 
-    # 匹配 run.hk/run.mp 行中 KEY_SH_NAME 后的计数器数字并替换
-    pattern = re.compile(r'(' + re.escape(KEY_SH_NAME) + r')\d+')
+    # 匹配 run.hk/run.mp 行中 KEY_NAME 后的计数器数字并替换
+    pattern = re.compile(r'(' + re.escape(KEY_NAME) + r')\d+')
     for i, line in enumerate(lines):
         for cmd in KEY_SH_COMMANDS:
             if line.strip().startswith(cmd):
@@ -131,9 +130,13 @@ def generate_run_hk(proton_num, neutron_num, file_path, level_range):
 
 
 if __name__ == "__main__":
+    KEY_NAME = "Ds267-HKpr1n2p"
     proton_num = 110
     neutron_num = 157
-
     level_range = 7
     file_path = "hk.out"
-    replace_sh_command(100)
+
+    replace_sh_command(KEY_NAME, 100)
+    replace_blocking_levels(blocking_levels, 1)
+    replace_blocking_levels(blocking_levels, 2)
+    replace_blocking_levels(blocking_levels, 3)
