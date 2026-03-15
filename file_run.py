@@ -75,13 +75,22 @@ def replace_sh_command(KEY_NAME, number, file_path="run.sh"):
 
 
 
-def generate_run_hk(proton_num, neutron_num, file_path, level_range):
+def generate_run_hk(proton_num, neutron_num, file_path, level_range, KEY_NAME):
     n_3Fermi_list = n_Fermi_ThreeLevelList(proton_num, neutron_num, file_path, level_range, is_manual_selection=False)
     p_3Fermi_list = p_Fermi_ThreeLevelList(proton_num, neutron_num, file_path, level_range, is_manual_selection=False)
 
     len_n = len(n_3Fermi_list)
     len_p = len(p_3Fermi_list)
+    print(f"计算 Z = {proton_num}, N = {neutron_num} 的 2p-1n 阻塞组合")
+    print(f'总计选取的质子单粒子态数: {len_p}, 中子单粒子态数: {len_n}')
+    print(f"总计的阻塞组合数: {len_n * len_p * (len_p - 1) // 2}")
+    ifRUN = input("是否批量运行生成的 run.hk 文件？(y/n): ")
+    if ifRUN.lower() == 'y':
+        print("正在生成并运行 run.hk 文件...")
+    else:
+        return 0
 
+    count = 0
     for n1 in range(len_n):
         n11_localidx = n_3Fermi_list[n1].level1.local_index
         n12_localidx = n_3Fermi_list[n1].level2.local_index
@@ -127,6 +136,12 @@ def generate_run_hk(proton_num, neutron_num, file_path, level_range):
                     tmp_string2["p_NPPS="] = p22_localidx
                     tmp_string3["p_NPNS="] = p23_localidx
 
+                replace_sh_command(KEY_NAME, count)
+                replace_blocking_levels(tmp_string1, 1)
+                replace_blocking_levels(tmp_string2, 2)
+                replace_blocking_levels(tmp_string3, 3)
+                count += 1
+
 
 
 if __name__ == "__main__":
@@ -140,3 +155,4 @@ if __name__ == "__main__":
     replace_blocking_levels(blocking_levels, 1)
     replace_blocking_levels(blocking_levels, 2)
     replace_blocking_levels(blocking_levels, 3)
+    generate_run_hk(proton_num, neutron_num, file_path, level_range, KEY_NAME)
