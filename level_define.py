@@ -31,14 +31,13 @@ class LevelData:
 
     # 比较函数, 对比差别, 返回差别大小
     def compare(self, other):
-        if self.parity != other.parity:
-            return float('inf')  # 无穷大表示完全不同
         index_diff = abs(self.index - other.index)
         N_diff      = abs(self.N - other.N)
         n_z_diff    = abs(self.n_z - other.n_z)
         Lambda_diff = abs(self.Lambda - other.Lambda)
         Omega_diff  = abs(self.Omega - other.Omega) 
-
+        if self.parity != other.parity:
+            return float('inf')  # 无穷大表示完全不同
         if index_diff > 5:
             return float('inf')  # 索引差别过大表示完全不同
         if N_diff > 1.0 :
