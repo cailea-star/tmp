@@ -48,7 +48,7 @@ def select_levels_manual(ThreeLevelData_list):
 
 
 # 主函数: 给定质子数和中子数，提取对应的中子费米面附近的能级，并进行匹配比较
-def match_neutron_levels(proton_num, neutron_num, file_path, level_range=10, is_manual_selection=False):
+def n_Fermi_ThreeLevelList(proton_num, neutron_num, file_path, level_range=10, is_manual_selection=False):
     print(f"\n正在读取文件 {file_path}...")
     print(f"正在提取质子数 {proton_num} 和中子数 {neutron_num} 的【中子】费米面附近能级...")
     proton_fermi = math.ceil(proton_num / 2)
@@ -69,7 +69,7 @@ def match_neutron_levels(proton_num, neutron_num, file_path, level_range=10, is_
 
 
 # 主函数: 给定质子数和中子数，提取对应的质子费米面附近的能级，并进行匹配比较
-def match_proton_levels(proton_num, neutron_num, file_path, level_range=10, is_manual_selection=False):
+def p_Fermi_ThreeLevelList(proton_num, neutron_num, file_path, level_range=10, is_manual_selection=False):
     print(f"\n正在读取文件 {file_path}...")
     print(f"正在提取质子数 {proton_num} 和中子数 {neutron_num} 的【质子】费米面附近能级...")
     proton_fermi = math.ceil(proton_num / 2)
@@ -97,5 +97,5 @@ if __name__ == "__main__":
 
     level_range = 10
     file_path = "hk.out"
-    match_neutron_levels(proton_num, neutron_num, file_path, level_range, is_manual_selection=False)
-    match_proton_levels(proton_num, neutron_num, file_path, level_range, is_manual_selection=False)
+    n_Fermi_ThreeLevelList(proton_num, neutron_num, file_path, level_range, is_manual_selection=False)
+    p_Fermi_ThreeLevelList(proton_num, neutron_num, file_path, level_range, is_manual_selection=False)
