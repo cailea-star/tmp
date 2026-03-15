@@ -75,7 +75,7 @@ def replace_sh_command(KEY_NAME, number, file_path="run.sh"):
 
 
 
-def generate_run_hk(proton_num, neutron_num, file_path, level_range, KEY_NAME):
+def generate_run(proton_num, neutron_num, file_path, level_range, KEY_NAME):
     n_3Fermi_list = n_Fermi_ThreeLevelList(proton_num, neutron_num, file_path, level_range, is_manual_selection=False)
     p_3Fermi_list = p_Fermi_ThreeLevelList(proton_num, neutron_num, file_path, level_range, is_manual_selection=False)
 
@@ -155,4 +155,4 @@ if __name__ == "__main__":
     replace_blocking_levels(blocking_levels, 1)
     replace_blocking_levels(blocking_levels, 2)
     replace_blocking_levels(blocking_levels, 3)
-    generate_run_hk(proton_num, neutron_num, file_path, level_range, KEY_NAME)
+    generate_run(proton_num, neutron_num, file_path, level_range, KEY_NAME)
