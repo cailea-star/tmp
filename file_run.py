@@ -8,6 +8,9 @@ KEY_BLOCKING_LEVELS = ["if [ $ind -eq 1 ]; then",
 
 KEY_SH_COMMANDS = ["run.hk", "run.mp"]
 
+sh_file_path = "~/wscsm1/run.sh"
+hk_file_path = "~/wscsm1/run.hk"
+
 blocking_levels = {
     "n_NPPS=":1,
     "n_NPNS=":2,
@@ -20,7 +23,7 @@ blocking_levels = {
 }
 
 
-def replace_blocking_levels(blocking_levels, index, file_path="run.hk"):
+def replace_blocking_levels(blocking_levels, index, file_path=hk_file_path):
     """替换run.hk中对应块(1,2,3)的阻塞参数
     """
     with open(file_path, 'r') as file:
@@ -56,7 +59,7 @@ def replace_blocking_levels(blocking_levels, index, file_path="run.hk"):
         file.writelines(lines)
 
 
-def replace_sh_command(KEY_NAME, number, file_path="run.sh"):
+def replace_sh_command(KEY_NAME, number, file_path=sh_file_path):
     """替换run.sh中对应的命令(run.hk或run.mp)，将KEY_SH_NAME后的计数器替换为number
     """
     with open(file_path, 'r') as file:
@@ -147,7 +150,7 @@ def run_sh_command():
     2. 返回该脚本的进程ID
     """
     import subprocess
-    process = subprocess.Popen(["~/wscsm1/run.sh"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    process = subprocess.Popen(["~/wscsm1/run.sh"], shell=True)
     return process.pid
 
 
@@ -156,7 +159,7 @@ if __name__ == "__main__":
     proton_num = 110
     neutron_num = 157
     level_range = 7
-    file_path = "hk.out"
+    out_file_path = "hk.out"
 
     replace_sh_command(KEY_NAME, 100)
     replace_blocking_levels(blocking_levels, 1)
