@@ -153,6 +153,11 @@ def replace_sh_command(KEY_NAME, count, sh_file_path):
 
 
 if __name__ == "__main__":
+    WSCSM1_DIR = Path.home() / "WORKSHOP/tmp"
+    sh_file_path = str(WSCSM1_DIR / "run.sh")
+    hk_file_path = str(WSCSM1_DIR / "run.hk")
+    log_file_path = str(WSCSM1_DIR / "run.log")
+
     KEY_NAME = "Ds269-HKpr1n2p"
     proton_num = 110
     neutron_num = 159
@@ -167,8 +172,8 @@ if __name__ == "__main__":
     start_B4=-0.053
     line1 = " \$DEFFI NB2=8, NGA=8, BET20=0.13,GAM0=0.075, NAZWIT=4,"
     line2 = "        DB2=0.02, DGA=0.02, NNNSTP=2, NNPSTP=2,"
-    replace_hk_startB4(start_B4)
-    replace_hk_params(line1, line2)
+    replace_hk_startB4(start_B4, hk_file_path)
+    replace_hk_params(line1, line2, hk_file_path)
 
     # 运行示例
     example_list = [
@@ -183,8 +188,8 @@ if __name__ == "__main__":
         count = countBegin + i
         print(f"正在运行示例 {i+1}，参数索引: Index(n1)={n1Index}, Index(p1)={p1Index}, Index(p2)={p2Index}")
         blocking1, blocking2, blocking3 = Indexs2blocking(n1Index, p1Index, p2Index, n_ThreeFermiList, p_ThreeFermiList)
-        replace_blocking_levels(blocking1, 1)
-        replace_blocking_levels(blocking2, 2)
-        replace_blocking_levels(blocking3, 3)
-        replace_sh_command(KEY_NAME, count)
+        replace_blocking_levels(blocking1, 1, hk_file_path)
+        replace_blocking_levels(blocking2, 2, hk_file_path)
+        replace_blocking_levels(blocking3, 3, hk_file_path)
+        replace_sh_command(KEY_NAME, count, sh_file_path)
         time.sleep(10)

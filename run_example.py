@@ -7,7 +7,6 @@ from replace_content import Indexs2blocking
 
 
 WSCSM1_DIR = Path.home() / "wscsm1"
-WSCSM1_DIR = Path("/home/cailea/WORKSHOP/tmp")
 sh_file_path = str(WSCSM1_DIR / "run.sh")
 hk_file_path = str(WSCSM1_DIR / "run.hk")
 log_file_path = str(WSCSM1_DIR / "run.log")
