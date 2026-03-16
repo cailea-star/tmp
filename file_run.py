@@ -80,6 +80,52 @@ def replace_sh_command(KEY_NAME, number, file_path=sh_file_path):
     with open(file_path, 'w') as file:
         file.writelines(lines)
 
+def num2blocking(n1Index, p1Index, p2Index, n_ThreeFermiList, p_ThreeFermiList):
+    n1 = p1 = p2 = 0
+    for n_ThreeLevel in n_ThreeFermiList:
+        if n_ThreeLevel.level1.index == n1Index:
+            n1 = n_ThreeLevel.index
+            break
+    for p_ThreeLevel in p_ThreeFermiList:
+        if p_ThreeLevel.level1.index == p1Index:
+            p1 = p_ThreeLevel.index
+            break
+    for p_ThreeLevel in p_ThreeFermiList:
+        if p_ThreeLevel.level1.index == p2Index:
+            p2 = p_ThreeLevel.index
+            break
+    blocking1 = blocking_levels.copy()
+    blocking2 = blocking_levels.copy()
+    blocking3 = blocking_levels.copy()
+    n1_parity = n_ThreeFermiList[n1].level1.parity
+    p1_parity = p_ThreeFermiList[p1].level1.parity
+    p2_parity = p_ThreeFermiList[p2].level1.parity
+    if n1_parity == "+":
+        blocking1["n1_PP="] = n_ThreeFermiList[n1].level1.local_index
+        blocking2["n1_PP="] = n_ThreeFermiList[n1].level2.local_index
+        blocking3["n1_PP="] = n_ThreeFermiList[n1].level3.local_index
+    else:
+        blocking1["n1_NP="] = n_ThreeFermiList[n1].level1.local_index
+        blocking2["n1_NP="] = n_ThreeFermiList[n1].level2.local_index
+        blocking3["n1_NP="] = n_ThreeFermiList[n1].level3.local_index
+    if p1_parity == "+":
+        blocking1["p1_PP="] = p_ThreeFermiList[p1].level1.local_index
+        blocking2["p1_PP="] = p_ThreeFermiList[p1].level2.local_index
+        blocking3["p1_PP="] = p_ThreeFermiList[p1].level3.local_index
+    else:
+        blocking1["p1_NP="] = p_ThreeFermiList[p1].level1.local_index
+        blocking2["p1_NP="] = p_ThreeFermiList[p1].level2.local_index
+        blocking3["p1_NP="] = p_ThreeFermiList[p1].level3.local_index
+    if p2_parity == "+":
+        blocking1["p2_PP="] = p_ThreeFermiList[p2].level1.local_index
+        blocking2["p2_PP="] = p_ThreeFermiList[p2].level2.local_index
+        blocking3["p2_PP="] = p_ThreeFermiList[p2].level3.local_index
+    else:
+        blocking1["p2_NP="] = p_ThreeFermiList[p2].level1.local_index
+        blocking2["p2_NP="] = p_ThreeFermiList[p2].level2.local_index
+        blocking3["p2_NP="] = p_ThreeFermiList[p2].level3.local_index
+    return blocking1, blocking2, blocking3
+
 
 
 def generate_run(proton_num, neutron_num, hkout_path, level_range, KEY_NAME):
@@ -99,54 +145,16 @@ def generate_run(proton_num, neutron_num, hkout_path, level_range, KEY_NAME):
 
     count = 0
     for n1 in range(len_n):
-        n11_localidx = n_3Fermi_list[n1].level1.local_index
-        n12_localidx = n_3Fermi_list[n1].level2.local_index
-        n13_localidx = n_3Fermi_list[n1].level3.local_index
-        n1_parity = n_3Fermi_list[n1].level1.parity
-        tmp_string1 = blocking_levels.copy()
-        tmp_string2 = blocking_levels.copy()
-        tmp_string3 = blocking_levels.copy()
-        if n1_parity == "+":
-            tmp_string1["n1_PP="] = n11_localidx
-            tmp_string2["n1_PP="] = n12_localidx
-            tmp_string3["n1_PP="] = n13_localidx
-        else:
-            tmp_string1["n1_NP="] = n11_localidx
-            tmp_string2["n1_NP="] = n12_localidx
-            tmp_string3["n1_NP="] = n13_localidx
-
+        Indexn1 = n_3Fermi_list[n1].level1.index
         for p1 in range(len_p):
-            p11_localidx = p_3Fermi_list[p1].level1.local_index
-            p12_localidx = p_3Fermi_list[p1].level2.local_index
-            p13_localidx = p_3Fermi_list[p1].level3.local_index
-            p1_parity = p_3Fermi_list[p1].level1.parity
-            if p1_parity == "+":
-                tmp_string1["p1_PP="] = p11_localidx
-                tmp_string2["p1_PP="] = p12_localidx
-                tmp_string3["p1_PP="] = p13_localidx
-            else:
-                tmp_string1["p1_NP="] = p11_localidx
-                tmp_string2["p1_NP="] = p12_localidx
-                tmp_string3["p1_NP="] = p13_localidx
-
+            Indexp1 = p_3Fermi_list[p1].level1.index
             for p2 in range(p1+1, len_p):
-                p21_localidx = p_3Fermi_list[p2].level1.local_index
-                p22_localidx = p_3Fermi_list[p2].level2.local_index
-                p23_localidx = p_3Fermi_list[p2].level3.local_index
-                p2_parity = p_3Fermi_list[p2].level1.parity
-                if p2_parity == "+":
-                    tmp_string1["p2_PP="] = p21_localidx
-                    tmp_string2["p2_PP="] = p22_localidx
-                    tmp_string3["p2_PP="] = p23_localidx
-                else:
-                    tmp_string1["p2_NP="] = p21_localidx
-                    tmp_string2["p2_NP="] = p22_localidx
-                    tmp_string3["p2_NP="] = p23_localidx
-
+                Indexp2 = p_3Fermi_list[p2].level1.index
+                blocking1, blocking2, blocking3 = num2blocking(Indexn1, Indexp1, Indexp2, n_3Fermi_list, p_3Fermi_list)
                 replace_sh_command(KEY_NAME, count)
-                replace_blocking_levels(tmp_string1, 1)
-                replace_blocking_levels(tmp_string2, 2)
-                replace_blocking_levels(tmp_string3, 3)
+                replace_blocking_levels(blocking1, 1)
+                replace_blocking_levels(blocking2, 2)
+                replace_blocking_levels(blocking3, 3)
 
                 PID = run_sh_command()
                 print(f"已启动测试脚本，进程ID: {PID}")
