@@ -10,14 +10,14 @@ for ((N=157;N<=157;N=N+2)); do
 #N=74
 
 #run.cs $Z $Z $N $N Rg$Z-$N-CS-pos
-run.hk $Z $Z $N $N Ds267-HKpr1n2p18
+run.hk $Z $Z $N $N Ds267-HKpr1n2p100
 
 
 
 cd mp
 
 #run.mp $Z $Z $N $N Rg$Z-$N-CS-pos
-run.mp $Z $Z $N $N Ds267-HKpr1n2p18
+run.mp $Z $Z $N $N Ds267-HKpr1n2p100
 
 
 

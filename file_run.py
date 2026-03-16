@@ -143,13 +143,11 @@ def generate_run(proton_num, neutron_num, hkout_path, level_range, KEY_NAME):
                 count += 1
 
 def run_sh_command():
-    """1. cd 到 "~/wscsm1/" 目录下
-       2. 后台执行 ".\run.sh &" 脚本，并返回进程ID
+    """1. 执行 "~/wscsm1/run.sh" 脚本
+    2. 返回该脚本的进程ID
     """
     import subprocess
-    import os
-    os.chdir(os.path.expanduser("~/wscsm1/"))
-    process = subprocess.Popen([".\run.sh"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    process = subprocess.Popen(["~/wscsm1/run.sh"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     return process.pid
 
 

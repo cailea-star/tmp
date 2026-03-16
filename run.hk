@@ -92,32 +92,32 @@ while [ $ind -le $COUNT ]; do
 db4=`echo "$start_B4 + $step_B4 * ( $ind -1)" | bc -l`
 
 if [ $ind -eq 1 ]; then
-n_NPPS=0
-n_NPNS=0
-n_PPPS=0
-n_PPNS=0
-p_NPPS=0
-p_NPNS=0
-p_PPPS=0
-p_PPNS=0
+n_NPPS=1
+n_NPNS=2
+n_PPPS=3
+n_PPNS=4
+p_NPPS=5
+p_NPNS=6
+p_PPPS=7
+p_PPNS=8
 elif [ $ind -eq 2 ]; then
-n_NPPS=0
-n_NPNS=0
-n_PPPS=0
-n_PPNS=0
-p_NPPS=0
-p_NPNS=0
-p_PPPS=0
-p_PPNS=0
+n_NPPS=1
+n_NPNS=2
+n_PPPS=3
+n_PPNS=4
+p_NPPS=5
+p_NPNS=6
+p_PPPS=7
+p_PPNS=8
 elif [ $ind -eq 3 ]; then
-n_NPPS=0
-n_NPNS=0
-n_PPPS=0
-n_PPNS=0
-p_NPPS=0
-p_NPNS=0
-p_PPPS=0
-p_PPNS=0
+n_NPPS=1
+n_NPNS=2
+n_PPPS=3
+n_PPNS=4
+p_NPPS=5
+p_NPNS=6
+p_PPPS=7
+p_PPNS=8
 fi
 
 echo b1=
