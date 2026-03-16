@@ -78,7 +78,7 @@ FN_GAMLAT_OUTPUT="output/gamlat-z$DZ-$GZ$ZPS-n$DN-$GN$NPS-$MK.out"
 COUNT=3
 
 # Initialize B4 values
-start_B4=-0.059
+start_B4=-0.053
 step_B4=0.02
 ##Config end
 

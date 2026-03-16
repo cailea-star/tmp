@@ -5,7 +5,9 @@ from level_select import n_GetFermiThreeLevelList, p_GetFermiThreeLevelList
 from replace_content import replace_blocking_levels, replace_sh_command, replace_hk_startB4, replace_hk_params
 from replace_content import Indexs2blocking
 
+
 WSCSM1_DIR = Path.home() / "wscsm1"
+WSCSM1_DIR = Path("/home/cailea/WORKSHOP/tmp")
 sh_file_path = str(WSCSM1_DIR / "run.sh")
 hk_file_path = str(WSCSM1_DIR / "run.hk")
 log_file_path = str(WSCSM1_DIR / "run.log")
@@ -87,5 +89,5 @@ if __name__ == "__main__":
     countBegin = 14
     for i, (n1Index, p1Index, p2Index) in enumerate(example_list):
         count = countBegin + i
-        print(f"正在运行示例 {i+1}，参数索引: n1={n1Index}, p1={p1Index}, p2={p2Index}")
-        run_example(n1Index, p1Index, p2Index, count, n_ThreeFermiList, p_ThreeFermiList)
+        print(f"正在运行示例 {i+1}，参数索引: Index(n1)={n1Index}, Index(p1)={p1Index}, Index(p2)={p2Index}")
+        # run_example(n1Index, p1Index, p2Index, count, n_ThreeFermiList, p_ThreeFermiList)
