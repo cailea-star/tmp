@@ -126,14 +126,16 @@ def replace_hk_startB4(start_B4, file_path=hk_file_path):
 
 def replace_hk_params(line1, line2, file_path=hk_file_path):
     """替换run.hk中$DEFFI行及其下一行的参数行"""
-    line1 = " \$DEFFI NB2=8, NGA=8, BET20=0.13,GAM0=0.075, NAZWIT=4,"
-    line2 = "        DB2=0.02, DGA=0.02, NNNSTP=2, NNPSTP=2,"
+    # line1 = " \$DEFFI NB2=8, NGA=8, BET20=0.13,GAM0=0.075, NAZWIT=4,"
+    # line2 = "        DB2=0.02, DGA=0.02, NNNSTP=2, NNPSTP=2,"
     with open(file_path, 'r') as file:
         lines = file.readlines()
 
     for i, line in enumerate(lines):
         if "DEFFI" in line:
-            pass
+            lines[i] = line1 + "\n"
+            lines[i + 1] = line2 + "\n"
+            break
 
     with open(file_path, 'w') as file:
         file.writelines(lines)
