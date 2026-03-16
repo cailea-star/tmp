@@ -77,3 +77,6 @@ if __name__ == "__main__":
         count = countBegin + i
         print(f"正在运行示例 {i+1}，参数索引: Index(n1)={n1Index}, Index(p1)={p1Index}, Index(p2)={p2Index}")
         run_example(n1Index, p1Index, p2Index, count, n_ThreeFermiList, p_ThreeFermiList)
+
+
+# python3 run_example.py
