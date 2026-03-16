@@ -1,4 +1,5 @@
 import re
+from pathlib import Path
 from level_select import n_Fermi_ThreeLevelList, p_Fermi_ThreeLevelList
 
 KEY_BLOCKING_LEVELS = ["if [ $ind -eq 1 ]; then", 
@@ -8,8 +9,10 @@ KEY_BLOCKING_LEVELS = ["if [ $ind -eq 1 ]; then",
 
 KEY_SH_COMMANDS = ["run.hk", "run.mp"]
 
-sh_file_path = "~/wscsm1/run.sh"
-hk_file_path = "~/wscsm1/run.hk"
+WSCSM1_DIR = Path.home() / "wscsm1"
+sh_file_path = str(WSCSM1_DIR / "run.sh")
+hk_file_path = str(WSCSM1_DIR / "run.hk")
+
 
 blocking_levels = {
     "n_NPPS=":1,
@@ -146,11 +149,20 @@ def generate_run(proton_num, neutron_num, hkout_path, level_range, KEY_NAME):
                 count += 1
 
 def run_sh_command():
-    """1. 执行 "~/wscsm1/run.sh" 脚本
-    2. 返回该脚本的进程ID
-    """
+    """后台执行 run.sh 脚本并返回进程ID。"""
     import subprocess
-    process = subprocess.Popen(["~/wscsm1/run.sh"], shell=True)
+
+    # 脱离当前会话并重定向输出，避免父进程结束时子进程被中断
+    log_path = WSCSM1_DIR / "run_sh.log"
+    with open(log_path, "a", encoding="utf-8") as log_file:
+        process = subprocess.Popen(
+            ["bash", sh_file_path],
+            shell=False,
+            cwd=str(WSCSM1_DIR),
+            stdout=log_file,
+            stderr=log_file,
+            start_new_session=True,
+        )
     return process.pid
 
 
