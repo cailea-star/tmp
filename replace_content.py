@@ -26,15 +26,15 @@ def Indexs2blocking(n1Index, p1Index, p2Index, n_ThreeFermiList, p_ThreeFermiLis
     n1 = p1 = p2 = 0
     for n_ThreeLevel in n_ThreeFermiList:
         if n_ThreeLevel.level1.index == n1Index:
-            n1 = n_ThreeLevel.index
+            n1 = n_ThreeLevel.level1.index
             break
     for p_ThreeLevel in p_ThreeFermiList:
         if p_ThreeLevel.level1.index == p1Index:
-            p1 = p_ThreeLevel.index
+            p1 = p_ThreeLevel.level1.index
             break
     for p_ThreeLevel in p_ThreeFermiList:
         if p_ThreeLevel.level1.index == p2Index:
-            p2 = p_ThreeLevel.index
+            p2 = p_ThreeLevel.level1.index
             break
     blocking1 = blocking_levels.copy()
     blocking2 = blocking_levels.copy()
@@ -170,7 +170,7 @@ if __name__ == "__main__":
 
     # 参数设置
     start_B4=-0.053
-    line1 = " \$DEFFI NB2=8, NGA=8, BET20=0.13,GAM0=0.075, NAZWIT=4,"
+    line1 = " \$DEFFI NB2=10, NGA=10, BET20=0.13,GAM0=0.075, NAZWIT=4,"
     line2 = "        DB2=0.02, DGA=0.02, NNNSTP=2, NNPSTP=2,"
     replace_hk_startB4(start_B4, hk_file_path)
     replace_hk_params(line1, line2, hk_file_path)
