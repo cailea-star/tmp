@@ -146,6 +146,21 @@ def replace_sh_command(KEY_NAME, count, sh_file_path):
     with open(sh_file_path, 'w') as file:
         file.writelines(lines)
 
+def replace_sh_NZ(Z, N, sh_file_path):
+    """替换 run.sh 中 "Z=" 与 "N=" 开头的行，直接覆盖为 "Z={Z}" 与 "N={N}"
+    """
+    with open(sh_file_path, 'r') as file:
+        lines = file.readlines()
+
+    for i, line in enumerate(lines):
+        if line.strip().startswith("Z="):
+            lines[i] = f"Z={Z}\n"
+        elif line.strip().startswith("N="):
+            lines[i] = f"N={N}\n"
+
+    with open(sh_file_path, 'w') as file:
+        file.writelines(lines)
+
 
 if __name__ == "__main__":
     WSCSM1_DIR = Path.home() / "WORKSHOP/tmp"
@@ -169,6 +184,7 @@ if __name__ == "__main__":
     line2 = "        DB2=0.02, DGA=0.02, NNNSTP=2, NNPSTP=2,"
     replace_hk_startB4(start_B4, hk_file_path)
     replace_hk_params(line1, line2, hk_file_path)
+    replace_sh_NZ(proton_num, neutron_num, sh_file_path)
 
     # 运行示例
     example_list = [

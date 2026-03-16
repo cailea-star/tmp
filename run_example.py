@@ -3,7 +3,9 @@
 import time
 from pathlib import Path
 from level_select import n_GetFermiThreeLevelList, p_GetFermiThreeLevelList
-from replace_content import replace_blocking_levels, replace_sh_command, replace_hk_startB4, replace_hk_params
+from replace_content import replace_blocking_levels
+from replace_content import replace_sh_command, replace_sh_NZ
+from replace_content import replace_hk_startB4, replace_hk_params
 from replace_content import Indexs2blocking
 
 
@@ -64,6 +66,7 @@ if __name__ == "__main__":
     line2 = "        DB2=0.02, DGA=0.02, NNNSTP=2, NNPSTP=2,"
     replace_hk_startB4(start_B4, hk_file_path)
     replace_hk_params(line1, line2, hk_file_path)
+    replace_sh_NZ(proton_num, neutron_num, sh_file_path)
 
     # 运行示例
     example_list = [
