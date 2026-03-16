@@ -12,20 +12,21 @@ class LevelData:
     Lambda: float
     Omega: float
 
+
     # 打印函数
     def __str__(self):
         # 设置宽度和格式（与 header 保持一致的列宽）
         index_str = f"{self.index:>5})"
-        parity_local_str = f"{self.parity:>6}   ({self.parity_index:>3})"
-        Nillson_str = f"{self.N:>4.1f}, {self.n_z:>4.1f}, {self.Lambda:>6.1f}, {self.Omega:>6.2f}"
+        parity_local_str = f"{self.parity:>1} ({self.parity_index:>3})"
+        Nillson_str = f"{self.N:>3.1f}, {self.n_z:>3.1f}, {self.Lambda:>3.1f}, {self.Omega:>4.2f}"
         return f"{index_str} {parity_local_str} {Nillson_str}"
     # 表头函数
     @staticmethod
     def header():
         # 使用与 __str__ 相同的列宽，确保表头与数据严格对齐
         index_str = f"{'Index':>5})"
-        parity_local_str = f"{'Parity':>6}   ({'Idx':>3})"
-        Nillson_str = f"{'N':>4}, {'n_z':>4}, {'Lambda':>6}, {'Omega':>6}"
+        parity_local_str = f"{'π':>1} ({'Idx':>3})"
+        Nillson_str = f"{'N':>3}, {'n_z':>3}, {'Λ':>3}, {'Ω':>4}"
         return f"{index_str} {parity_local_str} {Nillson_str}"
 
 
@@ -108,3 +109,9 @@ def match_ThreeLevelData_list(Fermi_Level_list, ThreeLevel_list):
             continue
         matched_ThreeLevel_list.append(ThreeLevelData(best1, best2, best3))
     return matched_ThreeLevel_list
+
+# 一些常见符号的直接映射, 方便后续使用简要打印:
+# \pi : π
+# \nu : ν
+# \Lambda : Λ
+# \Omega : Ω
