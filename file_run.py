@@ -128,40 +128,6 @@ def num2blocking(n1Index, p1Index, p2Index, n_ThreeFermiList, p_ThreeFermiList):
 
 
 
-def generate_run(proton_num, neutron_num, hkout_path, level_range, KEY_NAME):
-    n_3Fermi_list = n_GetFermiThreeLevelList(proton_num, neutron_num, hkout_path, level_range, is_manual_selection=False)
-    p_3Fermi_list = p_GetFermiThreeLevelList(proton_num, neutron_num, hkout_path, level_range, is_manual_selection=False)
-
-    len_n = len(n_3Fermi_list)
-    len_p = len(p_3Fermi_list)
-    print(f"计算 Z = {proton_num}, N = {neutron_num} 的 2p-1n 阻塞组合")
-    print(f'总计选取的质子单粒子态数: {len_p}, 中子单粒子态数: {len_n}')
-    print(f"总计的阻塞组合数: {len_n * len_p * (len_p - 1) // 2}")
-    ifRUN = input("是否批量运行生成的 run.hk 文件？(y/n): ")
-    if ifRUN.lower() == 'y':
-        print("正在生成并运行 run.hk 文件...")
-    else:
-        return 0
-
-    count = 0
-    for n1 in range(len_n):
-        Indexn1 = n_3Fermi_list[n1].level1.index
-        for p1 in range(len_p):
-            Indexp1 = p_3Fermi_list[p1].level1.index
-            for p2 in range(p1+1, len_p):
-                Indexp2 = p_3Fermi_list[p2].level1.index
-                blocking1, blocking2, blocking3 = num2blocking(Indexn1, Indexp1, Indexp2, n_3Fermi_list, p_3Fermi_list)
-                replace_sh_command(KEY_NAME, count)
-                replace_blocking_levels(blocking1, 1)
-                replace_blocking_levels(blocking2, 2)
-                replace_blocking_levels(blocking3, 3)
-
-                PID = run_sh_command()
-                print(f"已启动测试脚本，进程ID: {PID}")
-                monitor_process(PID)
-                count += 1
-
-
 def run_sh_command():
     """后台执行 run.sh 脚本并返回进程ID。"""
     import subprocess
@@ -190,10 +156,33 @@ def monitor_process(PID):
         time.sleep(10)
 
 
+def run_example(n1Index, p1Index, p2Index, n_ThreeFermiList, p_ThreeFermiList):
+    blocking1, blocking2, blocking3 = num2blocking(n1Index, p1Index, p2Index, n_ThreeFermiList, p_ThreeFermiList)
+    print("示例阻塞参数组合:")
+    print("组合1:", blocking1)
+    print("组合2:", blocking2)
+    print("组合3:", blocking3)
+    replace_blocking_levels(blocking1, 1)
+    replace_blocking_levels(blocking2, 2)
+    replace_blocking_levels(blocking3, 3)
+    replace_sh_command("Ds267-HKpr1n2p", 0)
+    PID = run_sh_command()
+    print(f"已启动测试脚本，进程ID: {PID}")
+    return PID
+
+
+
 if __name__ == "__main__":
     KEY_NAME = "Ds267-HKpr1n2p"
     proton_num = 110
     neutron_num = 157
     level_range = 7
     out_file_path = "hk.out"
-    generate_run(proton_num, neutron_num, out_file_path, level_range, KEY_NAME)
+    n_ThreeFermiList = n_GetFermiThreeLevelList(proton_num, neutron_num, hk_file_path, level_range=level_range, is_manual_selection=False)
+    p_ThreeFermiList = p_GetFermiThreeLevelList(proton_num, neutron_num, hk_file_path, level_range=level_range, is_manual_selection=False)
+    n1Index = n_ThreeFermiList[0].level1.index
+    p1Index = p_ThreeFermiList[0].level1.index
+    p2Index = p_ThreeFermiList[1].level1.index
+    PID = run_example(n1Index, p1Index, p2Index, n_ThreeFermiList, p_ThreeFermiList)
+    monitor_process(PID)
+    print("测试脚本已结束。")
