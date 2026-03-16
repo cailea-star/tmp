@@ -48,13 +48,13 @@ def select_levels_manual(ThreeLevelData_list):
 
 
 # 主函数: 给定质子数和中子数，提取对应的中子费米面附近的能级，并进行匹配比较
-def n_Fermi_ThreeLevelList(proton_num, neutron_num, file_path, level_range=10, is_manual_selection=False):
-    print(f"\n正在读取文件 {file_path}...")
+def n_Fermi_ThreeLevelList(proton_num, neutron_num, hkout_path, level_range=10, is_manual_selection=False):
+    print(f"\n正在读取文件 {hkout_path}...")
     print(f"正在提取质子数 {proton_num} 和中子数 {neutron_num} 的【中子】费米面附近能级...")
     proton_fermi = math.ceil(proton_num / 2)
     neutron_fermi = math.ceil(neutron_num / 2)
 
-    n_ThreeLevel_list = N_extract_ThreeLevelList_in_file(file_path)
+    n_ThreeLevel_list = N_extract_ThreeLevelList_in_file(hkout_path)
     n1_level_list = ThreeList2OneList(n_ThreeLevel_list, level_num=1)
     n1_fermi_list = n1_level_list[neutron_fermi-level_range : neutron_fermi+level_range]
     n_ThreeLevel_list = match_ThreeLevelData_list(n1_fermi_list, n_ThreeLevel_list)
@@ -69,13 +69,13 @@ def n_Fermi_ThreeLevelList(proton_num, neutron_num, file_path, level_range=10, i
 
 
 # 主函数: 给定质子数和中子数，提取对应的质子费米面附近的能级，并进行匹配比较
-def p_Fermi_ThreeLevelList(proton_num, neutron_num, file_path, level_range=10, is_manual_selection=False):
-    print(f"\n正在读取文件 {file_path}...")
+def p_Fermi_ThreeLevelList(proton_num, neutron_num, hkout_path, level_range=10, is_manual_selection=False):
+    print(f"\n正在读取文件 {hkout_path}...")
     print(f"正在提取质子数 {proton_num} 和中子数 {neutron_num} 的【质子】费米面附近能级...")
     proton_fermi = math.ceil(proton_num / 2)
     neutron_fermi = math.ceil(neutron_num / 2)
 
-    p_ThreeLevel_list = P_extract_ThreeLevelList_in_file(file_path)
+    p_ThreeLevel_list = P_extract_ThreeLevelList_in_file(hkout_path)
     p1_level_list = ThreeList2OneList(p_ThreeLevel_list, level_num=1)
     p1_fermi_list = p1_level_list[proton_fermi-level_range : proton_fermi+level_range]
     p_ThreeLevel_list = match_ThreeLevelData_list(p1_fermi_list, p_ThreeLevel_list)
@@ -96,6 +96,6 @@ if __name__ == "__main__":
     neutron_num = 170
 
     level_range = 10
-    file_path = "hk.out"
-    n_Fermi_ThreeLevelList(proton_num, neutron_num, file_path, level_range, is_manual_selection=False)
-    p_Fermi_ThreeLevelList(proton_num, neutron_num, file_path, level_range, is_manual_selection=False)
+    hkout_path = "hk.out"
+    n_Fermi_ThreeLevelList(proton_num, neutron_num, hkout_path, level_range, is_manual_selection=False)
+    p_Fermi_ThreeLevelList(proton_num, neutron_num, hkout_path, level_range, is_manual_selection=False)
