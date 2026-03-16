@@ -204,10 +204,10 @@ def run_example(n1Index, p1Index, p2Index, count, n_ThreeFermiList, p_ThreeFermi
 
 
 if __name__ == "__main__":
-    KEY_NAME = "Ds267-HKpr1n2p"
+    KEY_NAME = "Ds269-HKpr1n2p"
     proton_num = 110
-    neutron_num = 157
-    level_range = 7
+    neutron_num = 159
+    level_range = 8
     out_file_path = "hk.out"
 
     # 获取费米面附近的三个单粒子态列表
@@ -223,5 +223,13 @@ if __name__ == "__main__":
 
     # 运行示例
     example_list = [
-        ()
+        # n1, p1, p2
+        (73, 55, 56),
+        (73, 55, 57),
+        (73, 55, 58),
     ]
+    countBegin = 14
+    for i, (n1Index, p1Index, p2Index) in enumerate(example_list):
+        count = countBegin + i
+        print(f"正在运行示例 {i+1}，参数索引: n1={n1Index}, p1={p1Index}, p2={p2Index}")
+        run_example(n1Index, p1Index, p2Index, count, n_ThreeFermiList, p_ThreeFermiList)
