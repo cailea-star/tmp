@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # 运行示例的脚本，包含了参数替换、执行脚本和监控进程的功能。
 import time
 from pathlib import Path

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # 读取 hk.out 文件，提取其中的数值数据并进行处理
 import re
 import math

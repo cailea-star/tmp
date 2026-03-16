@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import math
 from level_define import LevelData, ThreeLevelData, ThreeList2OneList, match_ThreeLevelData_list
 from level_extract import N_extract_ThreeLevelList_in_file, P_extract_ThreeLevelList_in_file

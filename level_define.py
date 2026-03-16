@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import dataclasses
 
 # 设计数据块结构
