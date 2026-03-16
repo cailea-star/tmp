@@ -110,22 +110,21 @@ def replace_blocking_levels(blocking_levels, index, file_path=hk_file_path):
         file.writelines(lines)
 
 
-def replace_sh_command(KEY_NAME, number, file_path=sh_file_path):
-    """替换run.sh中对应的命令(run.hk或run.mp)，将KEY_SH_NAME后的计数器替换为number
+def replace_sh_command(KEY_NAME, count, file_path=sh_file_path):
+    """替换run.sh中run.hk与run.mp行，直接覆盖为 {cmd} $Z $Z $N $N KEY_NAME{count}
     """
     with open(file_path, 'r') as file:
         lines = file.readlines()
 
-    # 匹配 run.hk/run.mp 行中 KEY_NAME 后的计数器数字并替换
-    pattern = re.compile(r'(' + re.escape(KEY_NAME) + r')\d+')
     for i, line in enumerate(lines):
         for cmd in KEY_SH_COMMANDS:
             if line.strip().startswith(cmd):
-                lines[i] = pattern.sub(r'\g<1>' + str(number), line)
+                lines[i] = f"{cmd} $Z $Z $N $N {KEY_NAME}{count}\n"
                 break
-
+    
     with open(file_path, 'w') as file:
         file.writelines(lines)
+
 
 def run_sh_command():
     """后台执行 run.sh 脚本并返回进程ID。"""
@@ -164,7 +163,7 @@ def run_example(n1Index, p1Index, p2Index, n_ThreeFermiList, p_ThreeFermiList):
     replace_blocking_levels(blocking1, 1)
     replace_blocking_levels(blocking2, 2)
     replace_blocking_levels(blocking3, 3)
-    replace_sh_command("Ds267-HKpr1n2p", 0)
+    replace_sh_command(KEY_NAME, 0)
     PID = run_sh_command()
     print(f"已启动测试脚本，进程ID: {PID}")
     return PID
