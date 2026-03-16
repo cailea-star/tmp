@@ -24,18 +24,12 @@ blocking_levels = {
 
 def Indexs2blocking(n1Index, p1Index, p2Index, n_ThreeFermiList, p_ThreeFermiList):
     n1 = p1 = p2 = 0
-    for n_ThreeLevel in n_ThreeFermiList:
-        if n_ThreeLevel.level1.index == n1Index:
-            n1 = n_ThreeLevel.level1.index
-            break
-    for p_ThreeLevel in p_ThreeFermiList:
-        if p_ThreeLevel.level1.index == p1Index:
-            p1 = p_ThreeLevel.level1.index
-            break
-    for p_ThreeLevel in p_ThreeFermiList:
-        if p_ThreeLevel.level1.index == p2Index:
-            p2 = p_ThreeLevel.level1.index
-            break
+    for n1 in range(len(n_ThreeFermiList)):
+        if n_ThreeFermiList[n1].level1.index == n1Index: break
+    for p1 in range(len(p_ThreeFermiList)):
+        if p_ThreeFermiList[p1].level1.index == p1Index: break
+    for p2 in range(len(p_ThreeFermiList)):
+        if p_ThreeFermiList[p2].level1.index == p2Index: break
     blocking1 = blocking_levels.copy()
     blocking2 = blocking_levels.copy()
     blocking3 = blocking_levels.copy()
