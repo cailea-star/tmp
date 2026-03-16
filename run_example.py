@@ -27,20 +27,7 @@ def run_sh_command():
             stderr=log_file,
             start_new_session=True,
         )
-    return process.pid
-
-
-def monitor_process(PID):
-    """监控指定PID进程, 若不存在直接返回true, 
-    否则每隔10秒检查一次，直到进程结束返回true
-    """
-    if PID is None:
-        return True
-    import psutil
-    while True:
-        if not psutil.pid_exists(PID):
-            return True
-        time.sleep(10)
+    return process
 
 
 def run_example(n1Index, p1Index, p2Index, count, n_ThreeFermiList, p_ThreeFermiList):
@@ -53,11 +40,10 @@ def run_example(n1Index, p1Index, p2Index, count, n_ThreeFermiList, p_ThreeFermi
     replace_blocking_levels(blocking2, 2, hk_file_path)
     replace_blocking_levels(blocking3, 3, hk_file_path)
     replace_sh_command(KEY_NAME, count, sh_file_path)
-    PID = run_sh_command()
-    print(f"已启动测试脚本，进程ID: {PID}")
-    monitor_process(PID)
+    process = run_sh_command()
+    print(f"已启动测试脚本，进程ID: {process.pid}")
+    process.wait()  # 等待进程完成
     print("测试脚本已完成。")
-    return PID
 
 
 
