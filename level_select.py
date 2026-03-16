@@ -1,4 +1,15 @@
 # -*- coding: utf-8 -*-
+# Author: Cailea
+# Date: 2024-06-20
+# Description: 运行示例脚本，展示如何使用 level_select.py 中的函数来提取费米面附近的能级，并将其应用于替换 run.hk 中的参数，并执行 run.sh 脚本。
+
+# Functions:
+# - input_number_list: 解析用户输入的索引列表，支持逗号分隔和范围表示。
+# - select_levels_manual: 提供一个交互式界面，让用户手动选择匹配的能级。
+# - n_GetFermiThreeLevelList: 提取中子费米面附近的能级列表，并进行匹配比较, 返回一个包含 ThreeLevelData 对象的列表。
+# - p_GetFermiThreeLevelList: 提取质子费米面附近的能级列表，并进行匹配比较, 返回一个包含 ThreeLevelData 对象的列表。
+
+
 import math
 from level_define import LevelData, ThreeLevelData, ThreeList2OneList, match_ThreeLevelData_list
 from level_extract import N_extract_ThreeLevelList_in_file, P_extract_ThreeLevelList_in_file

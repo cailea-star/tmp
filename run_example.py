@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
-# 运行示例的脚本，包含了参数替换、执行脚本和监控进程的功能。
+# Author: Cailea
+# Date: 2024-06-20
+# Description: 运行示例脚本，展示如何使用 level_select.py 中的函数来提取费米面附近的能级，并将其应用于替换 run.hk 中的参数，并执行 run.sh 脚本。
+
+# Functions:
+# - run_sh_command: 后台执行 run.sh 脚本并返回 process 对象。
+# - run_example: 根据给定的参数索引，生成阻塞参数组合，
+
 import time
 from pathlib import Path
 from level_select import n_GetFermiThreeLevelList, p_GetFermiThreeLevelList

@@ -1,5 +1,16 @@
 # -*- coding: utf-8 -*-
-# 读取 hk.out 文件，提取其中的数值数据并进行处理
+# Author: Cailea
+# Date: 2024-06-20
+# Description: 运行示例脚本，展示如何使用 level_select.py 中的函数来提取费米面附近的能级，并将其应用于替换 run.hk 中的参数，并执行 run.sh 脚本。
+
+# Functions:
+# - find_line_numbers: 返回包含【匹配字段】的行号。
+# - judge_level_in_line: 判断行字符串中是否包含能级数据块的匹配字段。
+# - extract_level_in_line: 提取行字符串中的数据块，返回一个包含 LevelData 对象的列表。
+# - extract_level_list_in_block: 提取数据块函数，返回一个包含 LevelData 对象的列表。
+# - N_extract_ThreeLevelList_in_file: 提取文件中全部的中子能级数据块，返回一个包含 ThreeLevelData 对象的列表。
+# - P_extract_ThreeLevelList_in_file: 提取文件中全部的质子能级数据块，返回一个包含 ThreeLevelData 对象的列表。
+
 import re
 import math
 import numpy as np

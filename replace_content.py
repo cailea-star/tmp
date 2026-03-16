@@ -1,4 +1,17 @@
 # -*- coding: utf-8 -*-
+# Author: Cailea
+# Date: 2024-06-20
+# Description: 包含了用于替换 run.hk 和 run.sh 中参数的函数，以及一个示例函数 run_example 来展示如何使用这些替换函数来设置参数并执行 run.sh 脚本。
+
+# Functions:
+# - Indexs2blocking: 根据给定的能级索引和费米面附近的能级列表，生成对应的阻塞参数字典。
+# - replace_blocking_levels: 替换 run.hk 中对应块(1,2,3)的阻塞参数。
+# - replace_hk_startB4: 替换 run.hk 中 start_B4 参数值。
+# - replace_hk_params: 替换 run.hk 中 $DEFFI 行及其下一行的参数行。
+# - replace_sh_command: 替换 run.sh 中 run.hk 与 run.mp 行，直接覆盖为 {cmd} $Z $Z $N $N KEY_NAME{count}。
+# - replace_sh_NZ: 替换 run.sh 中 "Z=" 与 "N=" 开头的行，直接覆盖为 "Z={Z}" 与 "N={N}"。
+
+
 import os
 import re
 import time

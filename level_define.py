@@ -1,4 +1,13 @@
 # -*- coding: utf-8 -*-
+# Author: Cailea
+# Date: 2024-06-20
+# Description: 设计了 LevelData 和 ThreeLevelData 两个数据类来表示能级数据块的结构，并提供了比较函数来评估两个能级数据块之间的差别大小。
+
+# Functions:
+# - LevelData: 表示单个能级数据块的类，包含了能级的索引、能量、宇称、Nillson 量子数等属性，并提供了一个比较函数来评估两个能级数据块之间的差别大小。
+# - ThreeLevelData: 表示三个能级数据块组合的类，包含了 level1、level2 和 level3 三个 LevelData 对象，并提供了一个 __str__ 方法来格式化输出。
+# - ThreeList2OneList: 将一个包含 ThreeLevelData 对象的列表转换为一个包含 LevelData 对象的列表，指定要提取的 level_num。
+# - match_ThreeLevelData_list: 将费米面附近的能级列表与提取的 ThreeLevelData 列表进行匹配比较，返回一个包含匹配结果的 ThreeLevelData 列表。
 
 # 设计数据块结构
 class LevelData:
