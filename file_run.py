@@ -109,6 +109,35 @@ def replace_blocking_levels(blocking_levels, index, file_path=hk_file_path):
     with open(file_path, 'w') as file:
         file.writelines(lines)
 
+def replace_hk_startB4(start_B4, file_path=hk_file_path):
+    """替换run.hk中start_B4=其他的参数值"""
+    # start_B4=-0.053
+    with open(file_path, 'r') as file:
+        lines = file.readlines()
+
+    for i, line in enumerate(lines):
+        if line.strip().startswith("start_B4="):
+            lines[i] = f"start_B4={start_B4}\n"
+            break
+
+    with open(file_path, 'w') as file:
+        file.writelines(lines)
+
+
+def replace_hk_params(line1, line2, file_path=hk_file_path):
+    """替换run.hk中$DEFFI行及其下一行的参数行"""
+    line1 = " \$DEFFI NB2=8, NGA=8, BET20=0.13,GAM0=0.075, NAZWIT=4,"
+    line2 = "        DB2=0.02, DGA=0.02, NNNSTP=2, NNPSTP=2,"
+    with open(file_path, 'r') as file:
+        lines = file.readlines()
+
+    for i, line in enumerate(lines):
+        if "DEFFI" in line:
+            pass
+
+    with open(file_path, 'w') as file:
+        file.writelines(lines)
+
 
 def replace_sh_command(KEY_NAME, count, file_path=sh_file_path):
     """替换run.sh中run.hk与run.mp行，直接覆盖为 {cmd} $Z $Z $N $N KEY_NAME{count}
