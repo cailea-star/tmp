@@ -1,4 +1,6 @@
+import os
 import re
+import time
 from pathlib import Path
 from level_select import n_Fermi_ThreeLevelList, p_Fermi_ThreeLevelList
 
@@ -12,6 +14,7 @@ KEY_SH_COMMANDS = ["run.hk", "run.mp"]
 WSCSM1_DIR = Path.home() / "wscsm1"
 sh_file_path = str(WSCSM1_DIR / "run.sh")
 hk_file_path = str(WSCSM1_DIR / "run.hk")
+log_file_path = str(WSCSM1_DIR / "run.log")
 
 
 blocking_levels = {
@@ -146,15 +149,17 @@ def generate_run(proton_num, neutron_num, hkout_path, level_range, KEY_NAME):
                 replace_blocking_levels(tmp_string1, 1)
                 replace_blocking_levels(tmp_string2, 2)
                 replace_blocking_levels(tmp_string3, 3)
+
+                PID = run_sh_command()
+                print(f"已启动测试脚本，进程ID: {PID}")
+                monitor_process(PID)
                 count += 1
+
 
 def run_sh_command():
     """后台执行 run.sh 脚本并返回进程ID。"""
     import subprocess
-
-    # 脱离当前会话并重定向输出，避免父进程结束时子进程被中断
-    log_path = WSCSM1_DIR / "run_sh.log"
-    with open(log_path, "a", encoding="utf-8") as log_file:
+    with open(log_file_path, "a", encoding="utf-8") as log_file:
         process = subprocess.Popen(
             ["bash", sh_file_path],
             shell=False,
@@ -166,18 +171,23 @@ def run_sh_command():
     return process.pid
 
 
+def monitor_process(PID):
+    """监控指定PID进程, 若不存在直接返回true, 
+    否则每隔10秒检查一次，直到进程结束返回true
+    """
+    if PID is None:
+        return True
+    import psutil
+    while True:
+        if not psutil.pid_exists(PID):
+            return True
+        time.sleep(10)
+
+
 if __name__ == "__main__":
     KEY_NAME = "Ds267-HKpr1n2p"
     proton_num = 110
     neutron_num = 157
     level_range = 7
     out_file_path = "hk.out"
-
-    replace_sh_command(KEY_NAME, 100)
-    replace_blocking_levels(blocking_levels, 1)
-    replace_blocking_levels(blocking_levels, 2)
-    replace_blocking_levels(blocking_levels, 3)
-    # 运行测试文件bat
-    a = run_sh_command()
-    print(f"已启动测试脚本，进程ID: {a}")
-    # generate_run(proton_num, neutron_num, file_path, level_range, KEY_NAME)
+    generate_run(proton_num, neutron_num, out_file_path, level_range, KEY_NAME)
