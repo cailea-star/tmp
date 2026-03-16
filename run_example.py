@@ -33,9 +33,9 @@ def run_sh_command():
 def run_example(n1Index, p1Index, p2Index, count, n_ThreeFermiList, p_ThreeFermiList):
     blocking1, blocking2, blocking3 = Indexs2blocking(n1Index, p1Index, p2Index, n_ThreeFermiList, p_ThreeFermiList)
     print("示例阻塞参数组合:")
-    print("组合1:", blocking1)
-    print("组合2:", blocking2)
-    print("组合3:", blocking3)
+    print("形变1:", blocking1)
+    print("形变2:", blocking2)
+    print("形变3:", blocking3)
     replace_blocking_levels(blocking1, 1, hk_file_path)
     replace_blocking_levels(blocking2, 2, hk_file_path)
     replace_blocking_levels(blocking3, 3, hk_file_path)
