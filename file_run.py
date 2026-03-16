@@ -211,8 +211,8 @@ if __name__ == "__main__":
     out_file_path = "hk.out"
 
     # 获取费米面附近的三个单粒子态列表
-    n_ThreeFermiList = n_GetFermiThreeLevelList(proton_num, neutron_num, hk_file_path, level_range=level_range, is_manual_selection=True)
-    p_ThreeFermiList = p_GetFermiThreeLevelList(proton_num, neutron_num, hk_file_path, level_range=level_range, is_manual_selection=True)
+    n_ThreeFermiList = n_GetFermiThreeLevelList(proton_num, neutron_num, out_file_path, level_range=level_range, is_manual_selection=False)
+    p_ThreeFermiList = p_GetFermiThreeLevelList(proton_num, neutron_num, out_file_path, level_range=level_range, is_manual_selection=False)
 
     # 参数设置
     start_B4=-0.053
