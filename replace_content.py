@@ -177,3 +177,14 @@ if __name__ == "__main__":
         (73, 55, 57),
         (73, 55, 58),
     ]
+
+    countBegin = 14
+    for i, (n1Index, p1Index, p2Index) in enumerate(example_list):
+        count = countBegin + i
+        print(f"正在运行示例 {i+1}，参数索引: Index(n1)={n1Index}, Index(p1)={p1Index}, Index(p2)={p2Index}")
+        blocking1, blocking2, blocking3 = Indexs2blocking(n1Index, p1Index, p2Index, n_ThreeFermiList, p_ThreeFermiList)
+        replace_blocking_levels(blocking1, 1)
+        replace_blocking_levels(blocking2, 2)
+        replace_blocking_levels(blocking3, 3)
+        replace_sh_command(KEY_NAME, count)
+        time.sleep(10)
