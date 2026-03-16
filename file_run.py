@@ -185,7 +185,7 @@ def monitor_process(PID):
         time.sleep(10)
 
 
-def run_example(n1Index, p1Index, p2Index, n_ThreeFermiList, p_ThreeFermiList):
+def run_example(n1Index, p1Index, p2Index, count, n_ThreeFermiList, p_ThreeFermiList):
     blocking1, blocking2, blocking3 = num2blocking(n1Index, p1Index, p2Index, n_ThreeFermiList, p_ThreeFermiList)
     print("示例阻塞参数组合:")
     print("组合1:", blocking1)
@@ -194,7 +194,7 @@ def run_example(n1Index, p1Index, p2Index, n_ThreeFermiList, p_ThreeFermiList):
     replace_blocking_levels(blocking1, 1)
     replace_blocking_levels(blocking2, 2)
     replace_blocking_levels(blocking3, 3)
-    replace_sh_command(KEY_NAME, 0)
+    replace_sh_command(KEY_NAME, count)
     PID = run_sh_command()
     print(f"已启动测试脚本，进程ID: {PID}")
     monitor_process(PID)
@@ -221,4 +221,4 @@ if __name__ == "__main__":
     n_ThreeFermiList = n_GetFermiThreeLevelList(proton_num, neutron_num, hk_file_path, level_range=level_range, is_manual_selection=True)
     p_ThreeFermiList = p_GetFermiThreeLevelList(proton_num, neutron_num, hk_file_path, level_range=level_range, is_manual_selection=True)
 
-    # 
+    # 运行示例
