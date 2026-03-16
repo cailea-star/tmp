@@ -11,11 +11,6 @@ KEY_BLOCKING_LEVELS = ["if [ $ind -eq 1 ]; then",
 
 KEY_SH_COMMANDS = ["run.hk", "run.mp"]
 
-WSCSM1_DIR = Path.home() / "wscsm1"
-sh_file_path = str(WSCSM1_DIR / "run.sh")
-hk_file_path = str(WSCSM1_DIR / "run.hk")
-log_file_path = str(WSCSM1_DIR / "run.log")
-
 
 blocking_levels = {
     "n1_PP=":1,
@@ -27,7 +22,7 @@ blocking_levels = {
 }
 
 
-def num2blocking(n1Index, p1Index, p2Index, n_ThreeFermiList, p_ThreeFermiList):
+def Indexs2blocking(n1Index, p1Index, p2Index, n_ThreeFermiList, p_ThreeFermiList):
     n1 = p1 = p2 = 0
     for n_ThreeLevel in n_ThreeFermiList:
         if n_ThreeLevel.level1.index == n1Index:
@@ -74,10 +69,10 @@ def num2blocking(n1Index, p1Index, p2Index, n_ThreeFermiList, p_ThreeFermiList):
     return blocking1, blocking2, blocking3
 
 
-def replace_blocking_levels(blocking_levels, index, file_path=hk_file_path):
+def replace_blocking_levels(blocking_levels, index, hk_file_path):
     """替换run.hk中对应块(1,2,3)的阻塞参数
     """
-    with open(file_path, 'r') as file:
+    with open(hk_file_path, 'r') as file:
         lines = file.readlines()
 
     # 找到三个关键字行的行号
@@ -106,13 +101,13 @@ def replace_blocking_levels(blocking_levels, index, file_path=hk_file_path):
                 break
 
     # 写回文件
-    with open(file_path, 'w') as file:
+    with open(hk_file_path, 'w') as file:
         file.writelines(lines)
 
-def replace_hk_startB4(start_B4, file_path=hk_file_path):
+def replace_hk_startB4(start_B4, hk_file_path):
     """替换run.hk中start_B4=其他的参数值"""
     # start_B4=-0.053
-    with open(file_path, 'r') as file:
+    with open(hk_file_path, 'r') as file:
         lines = file.readlines()
 
     for i, line in enumerate(lines):
@@ -120,15 +115,15 @@ def replace_hk_startB4(start_B4, file_path=hk_file_path):
             lines[i] = f"start_B4={start_B4}\n"
             break
 
-    with open(file_path, 'w') as file:
+    with open(hk_file_path, 'w') as file:
         file.writelines(lines)
 
 
-def replace_hk_params(line1, line2, file_path=hk_file_path):
+def replace_hk_params(line1, line2, hk_file_path):
     """替换run.hk中$DEFFI行及其下一行的参数行"""
     # line1 = " \$DEFFI NB2=8, NGA=8, BET20=0.13,GAM0=0.075, NAZWIT=4,"
     # line2 = "        DB2=0.02, DGA=0.02, NNNSTP=2, NNPSTP=2,"
-    with open(file_path, 'r') as file:
+    with open(hk_file_path, 'r') as file:
         lines = file.readlines()
 
     for i, line in enumerate(lines):
@@ -137,14 +132,14 @@ def replace_hk_params(line1, line2, file_path=hk_file_path):
             lines[i + 1] = line2 + "\n"
             break
 
-    with open(file_path, 'w') as file:
+    with open(hk_file_path, 'w') as file:
         file.writelines(lines)
 
 
-def replace_sh_command(KEY_NAME, count, file_path=sh_file_path):
+def replace_sh_command(KEY_NAME, count, sh_file_path):
     """替换run.sh中run.hk与run.mp行，直接覆盖为 {cmd} $Z $Z $N $N KEY_NAME{count}
     """
-    with open(file_path, 'r') as file:
+    with open(sh_file_path, 'r') as file:
         lines = file.readlines()
 
     for i, line in enumerate(lines):
@@ -153,54 +148,8 @@ def replace_sh_command(KEY_NAME, count, file_path=sh_file_path):
                 lines[i] = f"{cmd} $Z $Z $N $N {KEY_NAME}{count}\n"
                 break
     
-    with open(file_path, 'w') as file:
+    with open(sh_file_path, 'w') as file:
         file.writelines(lines)
-
-
-def run_sh_command():
-    """后台执行 run.sh 脚本并返回进程ID。"""
-    import subprocess
-    with open(log_file_path, "a", encoding="utf-8") as log_file:
-        process = subprocess.Popen(
-            ["bash", sh_file_path],
-            shell=False,
-            cwd=str(WSCSM1_DIR),
-            stdout=log_file,
-            stderr=log_file,
-            start_new_session=True,
-        )
-    return process.pid
-
-
-def monitor_process(PID):
-    """监控指定PID进程, 若不存在直接返回true, 
-    否则每隔10秒检查一次，直到进程结束返回true
-    """
-    if PID is None:
-        return True
-    import psutil
-    while True:
-        if not psutil.pid_exists(PID):
-            return True
-        time.sleep(10)
-
-
-def run_example(n1Index, p1Index, p2Index, count, n_ThreeFermiList, p_ThreeFermiList):
-    blocking1, blocking2, blocking3 = num2blocking(n1Index, p1Index, p2Index, n_ThreeFermiList, p_ThreeFermiList)
-    print("示例阻塞参数组合:")
-    print("组合1:", blocking1)
-    print("组合2:", blocking2)
-    print("组合3:", blocking3)
-    replace_blocking_levels(blocking1, 1)
-    replace_blocking_levels(blocking2, 2)
-    replace_blocking_levels(blocking3, 3)
-    replace_sh_command(KEY_NAME, count)
-    PID = run_sh_command()
-    print(f"已启动测试脚本，进程ID: {PID}")
-    monitor_process(PID)
-    print("测试脚本已完成。")
-    return PID
-
 
 
 if __name__ == "__main__":
@@ -228,8 +177,3 @@ if __name__ == "__main__":
         (73, 55, 57),
         (73, 55, 58),
     ]
-    countBegin = 14
-    for i, (n1Index, p1Index, p2Index) in enumerate(example_list):
-        count = countBegin + i
-        print(f"正在运行示例 {i+1}，参数索引: n1={n1Index}, p1={p1Index}, p2={p2Index}")
-        run_example(n1Index, p1Index, p2Index, count, n_ThreeFermiList, p_ThreeFermiList)
