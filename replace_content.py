@@ -13,12 +13,12 @@ KEY_SH_COMMANDS = ["run.hk", "run.mp"]
 
 
 blocking_levels = {
-    "n1_PP=":1,
-    "n1_NP=":2,
-    "p1_PP=":3,
-    "p1_NP=":4,
-    "p2_PP=":5,
-    "p2_NP=":6,
+    "n1_PP=":0,
+    "n1_NP=":0,
+    "p1_PP=":0,
+    "p1_NP=":0,
+    "p2_PP=":0,
+    "p2_NP=":0,
 }
 
 
