@@ -18,14 +18,12 @@ log_file_path = str(WSCSM1_DIR / "run.log")
 
 
 blocking_levels = {
-    "n_NPPS=":1,
-    "n_NPNS=":2,
-    "n_PPPS=":3,
-    "n_PPNS=":4,
-    "p_NPPS=":5,
-    "p_NPNS=":6,
-    "p_PPPS=":7,
-    "p_PPNS=":8
+    "n1_PP=":1,
+    "n1_NP=":2,
+    "p1_PP=":3,
+    "p1_NP=":4,
+    "p2_PP=":5,
+    "p2_NP=":6,
 }
 
 
@@ -109,13 +107,13 @@ def generate_run(proton_num, neutron_num, hkout_path, level_range, KEY_NAME):
         tmp_string2 = blocking_levels.copy()
         tmp_string3 = blocking_levels.copy()
         if n1_parity == "+":
-            tmp_string1["n_PPNS="] = n11_localidx
-            tmp_string2["n_PPPS="] = n12_localidx
-            tmp_string3["n_PPNS="] = n13_localidx
+            tmp_string1["n1_PP="] = n11_localidx
+            tmp_string2["n1_PP="] = n12_localidx
+            tmp_string3["n1_PP="] = n13_localidx
         else:
-            tmp_string1["n_NPNS="] = n11_localidx
-            tmp_string2["n_NPPS="] = n12_localidx
-            tmp_string3["n_NPNS="] = n13_localidx
+            tmp_string1["n1_NP="] = n11_localidx
+            tmp_string2["n1_NP="] = n12_localidx
+            tmp_string3["n1_NP="] = n13_localidx
 
         for p1 in range(len_p):
             p11_localidx = p_3Fermi_list[p1].level1.local_index
@@ -123,13 +121,13 @@ def generate_run(proton_num, neutron_num, hkout_path, level_range, KEY_NAME):
             p13_localidx = p_3Fermi_list[p1].level3.local_index
             p1_parity = p_3Fermi_list[p1].level1.parity
             if p1_parity == "+":
-                tmp_string1["p_PPNS="] = p11_localidx
-                tmp_string2["p_PPPS="] = p12_localidx
-                tmp_string3["p_PPNS="] = p13_localidx
+                tmp_string1["p1_PP="] = p11_localidx
+                tmp_string2["p1_PP="] = p12_localidx
+                tmp_string3["p1_PP="] = p13_localidx
             else:
-                tmp_string1["p_NPNS="] = p11_localidx
-                tmp_string2["p_NPPS="] = p12_localidx
-                tmp_string3["p_NPNS="] = p13_localidx
+                tmp_string1["p1_NP="] = p11_localidx
+                tmp_string2["p1_NP="] = p12_localidx
+                tmp_string3["p1_NP="] = p13_localidx
 
             for p2 in range(p1+1, len_p):
                 p21_localidx = p_3Fermi_list[p2].level1.local_index
@@ -137,13 +135,13 @@ def generate_run(proton_num, neutron_num, hkout_path, level_range, KEY_NAME):
                 p23_localidx = p_3Fermi_list[p2].level3.local_index
                 p2_parity = p_3Fermi_list[p2].level1.parity
                 if p2_parity == "+":
-                    tmp_string1["p_PPNS="] = p21_localidx
-                    tmp_string2["p_PPPS="] = p22_localidx
-                    tmp_string3["p_PPNS="] = p23_localidx
+                    tmp_string1["p2_PP="] = p21_localidx
+                    tmp_string2["p2_PP="] = p22_localidx
+                    tmp_string3["p2_PP="] = p23_localidx
                 else:
-                    tmp_string1["p_NPNS="] = p21_localidx
-                    tmp_string2["p_NPPS="] = p22_localidx
-                    tmp_string3["p_NPNS="] = p23_localidx
+                    tmp_string1["p2_NP="] = p21_localidx
+                    tmp_string2["p2_NP="] = p22_localidx
+                    tmp_string3["p2_NP="] = p23_localidx
 
                 replace_sh_command(KEY_NAME, count)
                 replace_blocking_levels(tmp_string1, 1)
