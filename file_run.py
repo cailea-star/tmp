@@ -2,7 +2,7 @@ import os
 import re
 import time
 from pathlib import Path
-from level_select import n_Fermi_ThreeLevelList, p_Fermi_ThreeLevelList
+from level_select import n_GetFermiThreeLevelList, p_GetFermiThreeLevelList
 
 KEY_BLOCKING_LEVELS = ["if [ $ind -eq 1 ]; then", 
              "elif [ $ind -eq 2 ]; then", 
@@ -129,8 +129,8 @@ def num2blocking(n1Index, p1Index, p2Index, n_ThreeFermiList, p_ThreeFermiList):
 
 
 def generate_run(proton_num, neutron_num, hkout_path, level_range, KEY_NAME):
-    n_3Fermi_list = n_Fermi_ThreeLevelList(proton_num, neutron_num, hkout_path, level_range, is_manual_selection=False)
-    p_3Fermi_list = p_Fermi_ThreeLevelList(proton_num, neutron_num, hkout_path, level_range, is_manual_selection=False)
+    n_3Fermi_list = n_GetFermiThreeLevelList(proton_num, neutron_num, hkout_path, level_range, is_manual_selection=False)
+    p_3Fermi_list = p_GetFermiThreeLevelList(proton_num, neutron_num, hkout_path, level_range, is_manual_selection=False)
 
     len_n = len(n_3Fermi_list)
     len_p = len(p_3Fermi_list)
