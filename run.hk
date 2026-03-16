@@ -92,26 +92,26 @@ while [ $ind -le $COUNT ]; do
 db4=`echo "$start_B4 + $step_B4 * ( $ind -1)" | bc -l`
 
 if [ $ind -eq 1 ]; then
-n1_PP=0
+n1_PP=37
 n1_NP=0
-p1_PP=0
+p1_PP=27
 p1_NP=0
 p2_PP=0
-p2_NP=0
+p2_NP=29
 elif [ $ind -eq 2 ]; then
-n1_PP=0
+n1_PP=38
 n1_NP=0
-p1_PP=0
+p1_PP=27
 p1_NP=0
 p2_PP=0
-p2_NP=0
+p2_NP=29
 elif [ $ind -eq 3 ]; then
-n1_PP=0
+n1_PP=38
 n1_NP=0
-p1_PP=0
+p1_PP=27
 p1_NP=0
 p2_PP=0
-p2_NP=0
+p2_NP=29
 fi
 
 echo b1=
@@ -121,7 +121,7 @@ echo B4=$db4
 
 echo RUNNING HIGHK ......
 highk<< END_OF_INPUT >>$FN_HIGHK_OUTPUT
- \$DEFFI NB2=8, NGA=8, BET20=0.13,GAM0=0.075, NAZWIT=4,
+ \$DEFFI NB2=10, NGA=10, BET20=0.13,GAM0=0.075, NAZWIT=4,
         DB2=0.02, DGA=0.02, NNNSTP=2, NNPSTP=2,
         DB4=$db4, NNNDP=$DZ, NNNGP=$GZ, NNNDN=$DN, NNNGN=$GN \$
  \$INPUT NMAXP=12, NMAXN=14, IZ0=$Z0, IN0=$N0, IDIM=135,
