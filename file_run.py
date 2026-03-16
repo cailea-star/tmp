@@ -73,11 +73,18 @@ def replace_sh_command(KEY_NAME, number, file_path="run.sh"):
     with open(file_path, 'w') as file:
         file.writelines(lines)
 
+def run_sh_command(command):
+    """执行shell命令, 返回进程编号
+    """
+    import subprocess
+    process = subprocess.Popen(command, shell=True)
+    return process.pid
 
 
-def generate_run(proton_num, neutron_num, file_path, level_range, KEY_NAME):
-    n_3Fermi_list = n_Fermi_ThreeLevelList(proton_num, neutron_num, file_path, level_range, is_manual_selection=False)
-    p_3Fermi_list = p_Fermi_ThreeLevelList(proton_num, neutron_num, file_path, level_range, is_manual_selection=False)
+
+def generate_run(proton_num, neutron_num, hkout_path, level_range, KEY_NAME):
+    n_3Fermi_list = n_Fermi_ThreeLevelList(proton_num, neutron_num, hkout_path, level_range, is_manual_selection=False)
+    p_3Fermi_list = p_Fermi_ThreeLevelList(proton_num, neutron_num, hkout_path, level_range, is_manual_selection=False)
 
     len_n = len(n_3Fermi_list)
     len_p = len(p_3Fermi_list)
@@ -155,4 +162,7 @@ if __name__ == "__main__":
     replace_blocking_levels(blocking_levels, 1)
     replace_blocking_levels(blocking_levels, 2)
     replace_blocking_levels(blocking_levels, 3)
-    generate_run(proton_num, neutron_num, file_path, level_range, KEY_NAME)
+    # 运行测试文件bat
+    a = run_sh_command("run.sh")
+    print(f"已启动测试脚本，进程ID: {a}")
+    # generate_run(proton_num, neutron_num, file_path, level_range, KEY_NAME)
