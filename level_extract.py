@@ -21,7 +21,7 @@ def find_line_numbers(file_path, keyword):
 
 
 # 数据匹配字段: 
-# index)  energy  parity  (local_index)  N, n_z, Lambda, Omega
+# index)  energy  parity  (parity_index)  N, n_z, Lambda, Omega
 #    15)  -.2869E+02  - (  8)   3.5, 0.7, 2.4, 2.50      
 #   133)  0.5730E+00  - ( 69)   7.0, 4.5, 0.4, 0.50
 int_pattern = r"\d+"
@@ -45,7 +45,7 @@ def extract_level_in_line(line_string):
             index=int(match[0]),
             energy=float(match[1]),
             parity=match[2],
-            local_index=int(match[3]),
+            parity_index=int(match[3]),
             N=float(match[4]),
             n_z=float(match[5]),
             Lambda=float(match[6]),

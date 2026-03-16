@@ -6,7 +6,7 @@ class LevelData:
     index: int
     energy: float
     parity: str
-    local_index: int
+    parity_index: int
     N: float
     n_z: float
     Lambda: float
@@ -16,7 +16,7 @@ class LevelData:
     def __str__(self):
         # 设置宽度和格式（与 header 保持一致的列宽）
         index_str = f"{self.index:>5})"
-        parity_local_str = f"{self.parity:>6}   ({self.local_index:>3})"
+        parity_local_str = f"{self.parity:>6}   ({self.parity_index:>3})"
         Nillson_str = f"{self.N:>4.1f}, {self.n_z:>4.1f}, {self.Lambda:>6.1f}, {self.Omega:>6.2f}"
         return f"{index_str} {parity_local_str} {Nillson_str}"
     # 表头函数
