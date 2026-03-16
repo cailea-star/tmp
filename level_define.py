@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
-import dataclasses
 
 # 设计数据块结构
-@dataclasses.dataclass
 class LevelData:
     index: int
     energy: float
@@ -13,6 +11,15 @@ class LevelData:
     Lambda: float
     Omega: float
 
+    def __init__(self, index, energy, parity, parity_index, N, n_z, Lambda, Omega):
+            self.index = index
+            self.energy = energy
+            self.parity = parity
+            self.parity_index = parity_index
+            self.N = N
+            self.n_z = n_z
+            self.Lambda = Lambda
+            self.Omega = Omega
 
     # 打印函数
     def __str__(self):
@@ -51,12 +58,16 @@ class LevelData:
         return 3 * N_diff + 3 * n_z_diff + Lambda_diff + Omega_diff
 
 
-@dataclasses.dataclass
 class ThreeLevelData:
     level1: LevelData
     level2: LevelData
     level3: LevelData
     
+    def __init__(self, level1, level2, level3):
+        self.level1 = level1
+        self.level2 = level2
+        self.level3 = level3
+
     def __str__(self):
         return f"{self.level1}  |  {self.level2}  |  {self.level3}"
     
