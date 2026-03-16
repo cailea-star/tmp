@@ -197,6 +197,8 @@ def run_example(n1Index, p1Index, p2Index, n_ThreeFermiList, p_ThreeFermiList):
     replace_sh_command(KEY_NAME, 0)
     PID = run_sh_command()
     print(f"已启动测试脚本，进程ID: {PID}")
+    monitor_process(PID)
+    print("测试脚本已完成。")
     return PID
 
 
@@ -207,11 +209,16 @@ if __name__ == "__main__":
     neutron_num = 157
     level_range = 7
     out_file_path = "hk.out"
-    n_ThreeFermiList = n_GetFermiThreeLevelList(proton_num, neutron_num, hk_file_path, level_range=level_range, is_manual_selection=False)
-    p_ThreeFermiList = p_GetFermiThreeLevelList(proton_num, neutron_num, hk_file_path, level_range=level_range, is_manual_selection=False)
-    n1Index = n_ThreeFermiList[0].level1.index
-    p1Index = p_ThreeFermiList[0].level1.index
-    p2Index = p_ThreeFermiList[1].level1.index
-    PID = run_example(n1Index, p1Index, p2Index, n_ThreeFermiList, p_ThreeFermiList)
-    monitor_process(PID)
-    print("测试脚本已结束。")
+
+    # 参数设置
+    start_B4=-0.053
+    line1 = " \$DEFFI NB2=8, NGA=8, BET20=0.13,GAM0=0.075, NAZWIT=4,"
+    line2 = "        DB2=0.02, DGA=0.02, NNNSTP=2, NNPSTP=2,"
+    replace_hk_startB4(start_B4)
+    replace_hk_params(line1, line2)
+
+    # 获取费米面附近的三个单粒子态列表
+    n_ThreeFermiList = n_GetFermiThreeLevelList(proton_num, neutron_num, hk_file_path, level_range=level_range, is_manual_selection=True)
+    p_ThreeFermiList = p_GetFermiThreeLevelList(proton_num, neutron_num, hk_file_path, level_range=level_range, is_manual_selection=True)
+
+    # 
