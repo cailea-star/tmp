@@ -210,6 +210,10 @@ if __name__ == "__main__":
     level_range = 7
     out_file_path = "hk.out"
 
+    # 获取费米面附近的三个单粒子态列表
+    n_ThreeFermiList = n_GetFermiThreeLevelList(proton_num, neutron_num, hk_file_path, level_range=level_range, is_manual_selection=True)
+    p_ThreeFermiList = p_GetFermiThreeLevelList(proton_num, neutron_num, hk_file_path, level_range=level_range, is_manual_selection=True)
+
     # 参数设置
     start_B4=-0.053
     line1 = " \$DEFFI NB2=8, NGA=8, BET20=0.13,GAM0=0.075, NAZWIT=4,"
@@ -217,8 +221,7 @@ if __name__ == "__main__":
     replace_hk_startB4(start_B4)
     replace_hk_params(line1, line2)
 
-    # 获取费米面附近的三个单粒子态列表
-    n_ThreeFermiList = n_GetFermiThreeLevelList(proton_num, neutron_num, hk_file_path, level_range=level_range, is_manual_selection=True)
-    p_ThreeFermiList = p_GetFermiThreeLevelList(proton_num, neutron_num, hk_file_path, level_range=level_range, is_manual_selection=True)
-
     # 运行示例
+    example_list = [
+        ()
+    ]
