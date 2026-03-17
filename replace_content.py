@@ -93,19 +93,19 @@ def Indexs2blocking(n1Index, n2Index, p1Index, p2Index, n_ThreeFermiList, p_Thre
     return blocking1, blocking2, blocking3
 
 
-def replace_blocking_levels(blocking_levels, index, hk_file_path):
+def replace_blocking_levels(blocking, index, hk_file_path):
     """替换run.hk中对应块(1,2,3)的阻塞参数
     """
-    blocking_count = {key: 0 for key in blocking_levels}
+    blocking_count = {key: 0 for key in blocking}
     with open(hk_file_path, 'r') as file:
         lines = file.readlines()
 
     for i, line in enumerate(lines):
-        for key in blocking_levels.keys():
+        for key in blocking.keys():
             if line.strip().startswith(key):
                 blocking_count[key] += 1
                 if blocking_count[key] == index:
-                    lines[i] = key + str(blocking_levels[key]) + '\n'
+                    lines[i] = key + str(blocking[key]) + '\n'
                 break
 
     with open(hk_file_path, 'w') as file:
