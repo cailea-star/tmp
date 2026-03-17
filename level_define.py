@@ -62,9 +62,11 @@ class LevelData:
             return float('inf')  # N差别过大表示完全不同
         if n_z_diff > 1.0 :
             return float('inf')  # n_z差别过大表示完全不同
+        if Omega_diff > 0.5:
+            return float('inf')  # Omega差别过大表示完全不同
 
         # N 与 n_z 的差别权重较大，Lambda 和 Omega 的差别权重较小
-        return 3 * N_diff + 3 * n_z_diff + Lambda_diff + Omega_diff
+        return 3 * N_diff + 3 * n_z_diff + Lambda_diff + 3 * Omega_diff
 
 
 class ThreeLevelData:
