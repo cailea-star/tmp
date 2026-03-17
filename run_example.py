@@ -16,22 +16,20 @@ from replace_content import replace_hk_startB4, replace_hk_params
 from replace_content import Indexs2blocking
 
 
-WSCSM1_DIR = Path.home() / "wscsm1"
-sh_file_path = str(WSCSM1_DIR / "run.sh")
-hk_file_path = str(WSCSM1_DIR / "run.hk")
-log_file_path = str(WSCSM1_DIR / "run.log")
+ROOT_DIR = Path(__file__).parent.parent
+sh_file_path = str(ROOT_DIR / "run.sh")
+hk_file_path = str(ROOT_DIR / "run.hk")
+log_file_path = str(ROOT_DIR / "run.log")
 
 
-
-
-def run_sh_command():
+def run_sh_command(ROOT_DIR=ROOT_DIR, sh_file_path=sh_file_path, log_file_path=log_file_path):
     """后台执行 run.sh 脚本并返回进程ID。"""
     import subprocess
     with open(log_file_path, "a", encoding="utf-8") as log_file:
         process = subprocess.Popen(
             ["bash", sh_file_path],
             shell=False,
-            cwd=str(WSCSM1_DIR),
+            cwd=str(ROOT_DIR),
             stdout=log_file,
             stderr=log_file,
             start_new_session=True,
@@ -49,7 +47,7 @@ def run_example(n1Index, n2Inex, p1Index, p2Index, count, n_ThreeFermiList, p_Th
     replace_blocking_levels(blocking2, 2, hk_file_path)
     replace_blocking_levels(blocking3, 3, hk_file_path)
     replace_sh_command(KEY_NAME, count, sh_file_path)
-    process = run_sh_command()
+    process = run_sh_command(ROOT_DIR, sh_file_path, log_file_path)
     print(f"已启动测试脚本，进程ID: {process.pid}")
     process.wait()  # 等待进程完成
     print("测试脚本已完成。")
@@ -63,17 +61,17 @@ if __name__ == "__main__":
     KEY_NAME = "Ds269-HKpr1n2p"
     out_file_path = "hk.out"
 
-    # 获取费米面附近的三个单粒子态列表
-    n_ThreeFermiList = n_GetFermiThreeLevelList(proton_num, neutron_num, out_file_path, level_range=level_range, is_manual_selection=False)
-    p_ThreeFermiList = p_GetFermiThreeLevelList(proton_num, neutron_num, out_file_path, level_range=level_range, is_manual_selection=False)
-
     # 参数设置
     start_B4=-0.053
-    line1 = " \$DEFFI NB2=8, NGA=8, BET20=0.13,GAM0=0.075, NAZWIT=4,"
-    line2 = "        DB2=0.02, DGA=0.02, NNNSTP=2, NNPSTP=2,"
+    line1 = r" \$DEFFI NB2=8, NGA=8, BET20=0.13,GAM0=0.075, NAZWIT=4,"
+    line2 = r"        DB2=0.02, DGA=0.02, NNNSTP=2, NNPSTP=2,"
     replace_hk_startB4(start_B4, hk_file_path)
     replace_hk_params(line1, line2, hk_file_path)
     replace_sh_NZ(proton_num, neutron_num, sh_file_path)
+
+    # 获取费米面附近的三个单粒子态列表
+    n_ThreeFermiList = n_GetFermiThreeLevelList(proton_num, neutron_num, out_file_path, level_range=level_range, is_manual_selection=False)
+    p_ThreeFermiList = p_GetFermiThreeLevelList(proton_num, neutron_num, out_file_path, level_range=level_range, is_manual_selection=False)
 
     # 运行示例
     example_list = [
