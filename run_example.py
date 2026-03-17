@@ -39,8 +39,8 @@ def run_sh_command():
     return process
 
 
-def run_example(n1Index, p1Index, p2Index, count, n_ThreeFermiList, p_ThreeFermiList):
-    blocking1, blocking2, blocking3 = Indexs2blocking(n1Index, p1Index, p2Index, n_ThreeFermiList, p_ThreeFermiList)
+def run_example(n1Index, n2Inex, p1Index, p2Index, count, n_ThreeFermiList, p_ThreeFermiList):
+    blocking1, blocking2, blocking3 = Indexs2blocking(n1Index, n2Inex, p1Index, p2Index, n_ThreeFermiList, p_ThreeFermiList)
     print("示例阻塞参数组合:")
     print("形变1:", blocking1)
     print("形变2:", blocking2)
@@ -57,10 +57,10 @@ def run_example(n1Index, p1Index, p2Index, count, n_ThreeFermiList, p_ThreeFermi
 
 
 if __name__ == "__main__":
-    KEY_NAME = "Ds269-HKpr1n2p"
     proton_num = 110
     neutron_num = 159
     level_range = 8
+    KEY_NAME = "Ds269-HKpr1n2p"
     out_file_path = "hk.out"
 
     # 获取费米面附近的三个单粒子态列表
@@ -77,16 +77,16 @@ if __name__ == "__main__":
 
     # 运行示例
     example_list = [
-        # n1, p1, p2
-        (73, 55, 56),
-        (73, 55, 57),
-        (73, 55, 58),
+        # n1, n2, p1, p2
+        (0, 73, 55, 56),
+        (0, 73, 55, 57),
+        (0, 73, 55, 58),
     ]
     countBegin = 14
-    for i, (n1Index, p1Index, p2Index) in enumerate(example_list):
+    for i, (n1Index, n2Index, p1Index, p2Index) in enumerate(example_list):
         count = countBegin + i
-        print(f"正在运行示例 {i+1}，参数索引: Index(n1)={n1Index}, Index(p1)={p1Index}, Index(p2)={p2Index}")
-        run_example(n1Index, p1Index, p2Index, count, n_ThreeFermiList, p_ThreeFermiList)
+        print(f"正在运行示例 {count}，参数索引: Index(n1)={n1Index}, Index(n2)={n2Index}, Index(p1)={p1Index}, Index(p2)={p2Index}")
+        run_example(n1Index, n2Index, p1Index, p2Index, count, n_ThreeFermiList, p_ThreeFermiList)
 
 
 # python3 run_example.py
