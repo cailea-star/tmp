@@ -175,10 +175,10 @@ def replace_sh_NZ(Z, N, sh_file_path):
 
 
 if __name__ == "__main__":
-    WSCSM1_DIR = Path.home() / "WORKSHOP/tmp"
-    sh_file_path = str(WSCSM1_DIR / "run.sh")
-    hk_file_path = str(WSCSM1_DIR / "run.hk")
-    log_file_path = str(WSCSM1_DIR / "run.log")
+    ROOT_DIR = Path(__file__).parent
+    sh_file_path = str(ROOT_DIR / "run.sh")
+    hk_file_path = str(ROOT_DIR / "run.hk")
+    log_file_path = str(ROOT_DIR / "run.log")
 
     KEY_NAME = "Ds269-HKpr1n2p"
     proton_num = 110
@@ -186,9 +186,6 @@ if __name__ == "__main__":
     level_range = 8
     out_file_path = "hk.out"
 
-    # 获取费米面附近的三个单粒子态列表
-    n_ThreeFermiList = n_GetFermiThreeLevelList(proton_num, neutron_num, out_file_path, level_range=level_range, is_manual_selection=False)
-    p_ThreeFermiList = p_GetFermiThreeLevelList(proton_num, neutron_num, out_file_path, level_range=level_range, is_manual_selection=False)
 
     # 参数设置
     start_B4=-0.053
@@ -197,6 +194,11 @@ if __name__ == "__main__":
     replace_hk_startB4(start_B4, hk_file_path)
     replace_hk_params(line1, line2, hk_file_path)
     replace_sh_NZ(proton_num, neutron_num, sh_file_path)
+
+
+    # 获取费米面附近的三个单粒子态列表
+    n_ThreeFermiList = n_GetFermiThreeLevelList(proton_num, neutron_num, out_file_path, level_range=level_range, is_manual_selection=False)
+    p_ThreeFermiList = p_GetFermiThreeLevelList(proton_num, neutron_num, out_file_path, level_range=level_range, is_manual_selection=False)
 
     # 运行示例
     example_list = [
