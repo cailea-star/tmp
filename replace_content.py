@@ -100,35 +100,18 @@ def Indexs2blocking(n1Index, n2Index, p1Index, p2Index, n_ThreeFermiList, p_Thre
 def replace_blocking_levels(blocking_levels, index, hk_file_path):
     """替换run.hk中对应块(1,2,3)的阻塞参数
     """
+    blocking_count = blocking_levels.copy()
     with open(hk_file_path, 'r') as file:
         lines = file.readlines()
 
-    # 找到三个关键字行的行号
-    KEY_LINEs = []
     for i, line in enumerate(lines):
-        if line.strip() in KEY_BLOCKING_LEVELS:
-            KEY_LINEs.append(i)
-
-    # 确定要替换的行范围
-    start = KEY_LINEs[index - 1] + 1
-    if index < len(KEY_LINEs):
-        end = KEY_LINEs[index]
-    else:
-        # 最后一个块，找到 fi 行作为结束
-        end = start
-        for i in range(start, len(lines)):
-            if lines[i].strip() == 'fi':
-                end = i
+        for key in blocking_levels.keys():
+            if line.strip().startswith(key):
+                blocking_count[key] += 1
+                if blocking_count[key] == index:
+                    lines[i] = key + str(blocking_levels[key]) + '\n'
                 break
 
-    # 在目标范围内替换变量赋值
-    for i in range(start, end):
-        for key, value in blocking_levels.items():
-            if lines[i].strip().startswith(key):
-                lines[i] = key + str(value) + '\n'
-                break
-
-    # 写回文件
     with open(hk_file_path, 'w') as file:
         file.writelines(lines)
 
