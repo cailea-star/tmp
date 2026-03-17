@@ -18,10 +18,6 @@ import time
 from pathlib import Path
 from level_select import n_GetFermiThreeLevelList, p_GetFermiThreeLevelList
 
-KEY_BLOCKING_LEVELS = ["if [ $ind -eq 1 ]; then", 
-             "elif [ $ind -eq 2 ]; then", 
-             "elif [ $ind -eq 3 ]; then"]
-
 
 KEY_SH_COMMANDS = ["run.hk", "run.mp"]
 
@@ -100,7 +96,7 @@ def Indexs2blocking(n1Index, n2Index, p1Index, p2Index, n_ThreeFermiList, p_Thre
 def replace_blocking_levels(blocking_levels, index, hk_file_path):
     """替换run.hk中对应块(1,2,3)的阻塞参数
     """
-    blocking_count = blocking_levels.copy()
+    blocking_count = {key: 0 for key in blocking_levels}
     with open(hk_file_path, 'r') as file:
         lines = file.readlines()
 
@@ -196,8 +192,8 @@ if __name__ == "__main__":
 
     # 参数设置
     start_B4=-0.053
-    line1 = " \$DEFFI NB2=10, NGA=10, BET20=0.13,GAM0=0.075, NAZWIT=4,"
-    line2 = "        DB2=0.02, DGA=0.02, NNNSTP=2, NNPSTP=2,"
+    line1 = r" \$DEFFI NB2=10, NGA=10, BET20=0.13,GAM0=0.075, NAZWIT=4,"
+    line2 = r"        DB2=0.02, DGA=0.02, NNNSTP=2, NNPSTP=2,"
     replace_hk_startB4(start_B4, hk_file_path)
     replace_hk_params(line1, line2, hk_file_path)
     replace_sh_NZ(proton_num, neutron_num, sh_file_path)
