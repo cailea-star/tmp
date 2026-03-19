@@ -59,7 +59,7 @@ def extract_level_in_line(line_string):
             parity=match[2],
             parity_index=int(match[3]),
             N=float(match[4]),
-            n_z=float(match[5]),
+            nz=float(match[5]),
             Lambda=float(match[6]),
             Omega=float(match[7])
         )

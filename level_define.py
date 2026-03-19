@@ -16,17 +16,17 @@ class LevelData:
     parity: str
     parity_index: int
     N: float
-    n_z: float
+    nz: float
     Lambda: float
     Omega: float
 
-    def __init__(self, index, energy, parity, parity_index, N, n_z, Lambda, Omega):
+    def __init__(self, index, energy, parity, parity_index, N, nz, Lambda, Omega):
             self.index = index
             self.energy = energy
             self.parity = parity
             self.parity_index = parity_index
             self.N = N
-            self.n_z = n_z
+            self.nz = nz
             self.Lambda = Lambda
             self.Omega = Omega
 
@@ -35,7 +35,7 @@ class LevelData:
         # 设置宽度和格式（与 header 保持一致的列宽）
         index_str = f"{self.index:>5})"
         parity_local_str = f"{self.parity:>1} ({self.parity_index:>3})"
-        Nillson_str = f"{self.N:>3.1f}, {self.n_z:>3.1f}, {self.Lambda:>3.1f}, {self.Omega:>4.2f}"
+        Nillson_str = f"{self.N:>3.1f}, {self.nz:>3.1f}, {self.Lambda:>3.1f}, {self.Omega:>4.2f}"
         return f"{index_str} {parity_local_str} {Nillson_str}"
     # 表头函数
     @staticmethod
@@ -43,7 +43,7 @@ class LevelData:
         # 使用与 __str__ 相同的列宽，确保表头与数据严格对齐
         index_str = f"{'Index':>5})"
         parity_local_str = f"{'π':>1} ({'Idx':>3})"
-        Nillson_str = f"{'N':>3}, {'n_z':>3}, {'Λ':>3}, {'Ω':>4}"
+        Nillson_str = f"{'N':>3}, {'nz':>3}, {'Λ':>3}, {'Ω':>4}"
         return f"{index_str} {parity_local_str} {Nillson_str}"
 
 
@@ -51,7 +51,7 @@ class LevelData:
     def compare(self, other):
         index_diff = abs(self.index - other.index)
         N_diff      = abs(self.N - other.N)
-        n_z_diff    = abs(self.n_z - other.n_z)
+        nz_diff    = abs(self.nz - other.nz)
         Lambda_diff = abs(self.Lambda - other.Lambda)
         Omega_diff  = abs(self.Omega - other.Omega) 
         if self.parity != other.parity:
@@ -60,13 +60,13 @@ class LevelData:
             return float('inf')  # 索引差别过大表示完全不同
         if N_diff > 1.0 :
             return float('inf')  # N差别过大表示完全不同
-        if n_z_diff > 1.0 :
+        if nz_diff > 1.0 :
             return float('inf')  # n_z差别过大表示完全不同
         if Omega_diff > 0.5:
             return float('inf')  # Omega差别过大表示完全不同
 
         # N 与 n_z 的差别权重较大，Lambda 和 Omega 的差别权重较小
-        return 3 * N_diff + 3 * n_z_diff + Lambda_diff + 3 * Omega_diff
+        return 3 * N_diff + 3 * nz_diff + Lambda_diff + 3 * Omega_diff
 
 
 class ThreeLevelData:
