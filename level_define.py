@@ -33,17 +33,18 @@ class LevelData:
     # 打印函数
     def __str__(self):
         # 设置宽度和格式（与 header 保持一致的列宽）
-        index_str = f"{self.index:>5})"
-        parity_local_str = f"{self.parity:>1} ({self.parity_index:>3})"
+        index_str = f"{self.index:>6})"
+        parity_local_str = f"{self.parity:>2} ({self.parity_index:>4})"
         Nillson_str = f"{self.N:>3.1f}, {self.nz:>3.1f}, {self.Lambda:>3.1f}, {self.Omega:>4.2f}"
         return f"{index_str} {parity_local_str} {Nillson_str}"
     # 表头函数
     @staticmethod
-    def header():
-        # 使用与 __str__ 相同的列宽，确保表头与数据严格对齐
-        index_str = f"{'Index':>5})"
-        parity_local_str = f"{'π':>1} ({'Idx':>3})"
-        Nillson_str = f"{'N':>3}, {'nz':>3}, {'Λ':>3}, {'Ω':>4}"
+    def header(beta_idx=0):
+        # 使用与 __str__ 相同的列宽，确保表头与数据严格对齐, number 参数用于指定表头中的索引列标题
+        num_str = str(beta_idx) if beta_idx > 0 else ""
+        index_str = f"{'Index'+num_str:>6})"
+        parity_local_str = f"{'π'+num_str:>2} ({'Idx'+num_str:>4})"
+        Nillson_str = f"{'N'+num_str:>3}, {'nz'+num_str:>3}, {'Λ'+num_str:>3}, {'Ω'+num_str:>4}"
         return f"{index_str} {parity_local_str} {Nillson_str}"
 
 
@@ -80,21 +81,21 @@ class ThreeLevelData:
         self.level3 = level3
 
     def __str__(self):
-        return f"{self.level1}  |  {self.level2}  |  {self.level3}"
+        return f"{self.level1} | {self.level2} | {self.level3}"
     
     @staticmethod
     def header():
-        return f"{LevelData.header()}  |  {LevelData.header()}  |  {LevelData.header()}"
+        return f"{LevelData.header(1)} | {LevelData.header(2)} | {LevelData.header(3)}"
     
 
-def ThreeList2OneList(ThreeLevelData_list, level_num=1):
+def ThreeList2OneList(ThreeLevelData_list, beta_idx=1):
     one_list = []
     for three_level in ThreeLevelData_list:
-        if level_num == 1:
+        if beta_idx == 1:
             one_list.append(three_level.level1)
-        elif level_num == 2:
+        elif beta_idx == 2:
             one_list.append(three_level.level2)
-        elif level_num == 3:
+        elif beta_idx == 3:
             one_list.append(three_level.level3)
     return one_list
 

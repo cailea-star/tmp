@@ -67,7 +67,7 @@ def n_GetFermiThreeLevelList(proton_num, neutron_num, hkout_path, level_range=10
     neutron_fermi = math.ceil(neutron_num / 2)
 
     n_ThreeLevel_list = N_extract_ThreeLevelList_in_file(hkout_path)
-    n1_level_list = ThreeList2OneList(n_ThreeLevel_list, level_num=1)
+    n1_level_list = ThreeList2OneList(n_ThreeLevel_list, beta_idx=1)
     n1_fermi_list = n1_level_list[neutron_fermi-level_range : neutron_fermi+level_range]
     n_ThreeLevel_list = match_ThreeLevelData_list(n1_fermi_list, n_ThreeLevel_list)
 
@@ -88,7 +88,7 @@ def p_GetFermiThreeLevelList(proton_num, neutron_num, hkout_path, level_range=10
     neutron_fermi = math.ceil(neutron_num / 2)
 
     p_ThreeLevel_list = P_extract_ThreeLevelList_in_file(hkout_path)
-    p1_level_list = ThreeList2OneList(p_ThreeLevel_list, level_num=1)
+    p1_level_list = ThreeList2OneList(p_ThreeLevel_list, beta_idx=1)
     p1_fermi_list = p1_level_list[proton_fermi-level_range : proton_fermi+level_range]
     p_ThreeLevel_list = match_ThreeLevelData_list(p1_fermi_list, p_ThreeLevel_list)
 
