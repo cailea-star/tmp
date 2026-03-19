@@ -36,11 +36,13 @@ def read_ThreeLevelList_from_file(input_path):
     with open(input_path, 'r') as f:
         lines = f.readlines()
     # 1 清洗表格的分割符号, 以便后续解析
-    for line in lines:
+    for i in range(len(lines)):
+        line = lines[i]
         line = line.replace(")", ",")
         line = line.replace("(", ",")
         line = line.replace("|", ",")
         line = line.replace(" ", "")
+        lines[i] = line
     # 2 解析表头, 以便后续解析
     header = lines[0].strip()
     header_fields = header.split(",")
@@ -64,7 +66,7 @@ def read_ThreeLevelList_from_file(input_path):
             Omega   = float(dict_data[f"Ω{real_idx}"])
             level   = LevelData(index, energy, parity, Idx, N, nz, Lambda, Omega)
             levels.append(level)
-        ThreeLevel = ThreeLevel(levels[0], levels[1], levels[2])
+        ThreeLevel = ThreeLevelData(levels[0], levels[1], levels[2])
         ThreeLevelList.append(ThreeLevel)
     print(f"已从文件 {input_path} 中读取 {len(ThreeLevelList)} 条能级数据:")
     print(ThreeLevelData.header())
@@ -128,25 +130,21 @@ def Select_FermiThreeLevelList(proton_num, neutron_num, hkout_path, level_range=
     write_ThreeLevelList_to_file(p_ThreeLevelList, scripts_dir / p_all_name)
     write_ThreeLevelList_to_file(n_ThreeFermiList, scripts_dir / n_fermi_name)
     write_ThreeLevelList_to_file(p_ThreeFermiList, scripts_dir / p_fermi_name)
+
     print(f"已写入 {n_all_name}, {p_all_name}, {n_fermi_name} 和 {p_fermi_name},")
     print("请打开文件查看费米面附近的能级列表，并根据需要进行手动选择匹配的能级。")
     is_continue = input("请输入 yes 或 no: ")
     if is_continue.lower() != "yes":
         print("程序已终止。")
         exit(0)
+    
     print("正在读取用户选择的能级列表...")
-    n_ThreeFermiList = read_ThreeLevelList_from_file(scripts_dir / n_fermi_name)
-    p_ThreeFermiList = read_ThreeLevelList_from_file(scripts_dir / p_fermi_name)
     print(f"修复后的【中子能级】:")
-    print(ThreeLevelData.header())
-    for n_ThreeLeval in n_ThreeFermiList:
-        print(n_ThreeLeval)
+    n_ThreeFermiList = read_ThreeLevelList_from_file(scripts_dir / n_fermi_name)
     print(f"修复后的【质子能级】:")
-    print(ThreeLevelData.header())
-    for p_ThreeLeval in p_ThreeFermiList:
-        print(p_ThreeLeval)
+    p_ThreeFermiList = read_ThreeLevelList_from_file(scripts_dir / p_fermi_name)
+    
     return n_ThreeFermiList, p_ThreeFermiList
-
 
 
 if __name__ == "__main__":
