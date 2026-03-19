@@ -35,7 +35,7 @@ class LevelData:
         # 设置宽度和格式（与 header 保持一致的列宽）
         Index_str = f"{self.Index:>6})"
         parity_Idx_str = f"{self.parity:>2} ({self.Idx:>4})"
-        Nillson_str = f"{self.N:>4.1f}, {self.nz:>3.1f}, {self.Lambda:>4.1f}, {self.Omega:>4.1f}"
+        Nillson_str = f"{self.N:>4.1f}, {self.nz:>4.1f}, {self.Lambda:>4.1f}, {self.Omega:>4.1f}"
         return f"{Index_str} {parity_Idx_str} {Nillson_str}"
     # 表头函数
     @staticmethod
@@ -44,7 +44,7 @@ class LevelData:
         num_str = str(beta_idx) if beta_idx > 0 else ""
         Index_str = f"{'Index'+num_str:>6})"
         parity_Idx_str = f"{'π'+num_str:>2} ({'Idx'+num_str:>4})"
-        Nillson_str = f"{'N'+num_str:>4}, {'nz'+num_str:>3}, {'Λ'+num_str:>4}, {'Ω'+num_str:>4}"
+        Nillson_str = f"{'N'+num_str:>4}, {'nz'+num_str:>4}, {'Λ'+num_str:>4}, {'Ω'+num_str:>4}"
         return f"{Index_str} {parity_Idx_str} {Nillson_str}"
 
 
