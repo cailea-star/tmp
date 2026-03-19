@@ -33,31 +33,31 @@ class LevelData:
     # 打印函数
     def __str__(self):
         # 设置宽度和格式（与 header 保持一致的列宽）
-        index_str = f"{self.Index:>6})"
+        Index_str = f"{self.Index:>6})"
         parity_local_str = f"{self.parity:>2} ({self.Idx:>4})"
         Nillson_str = f"{self.N:>4.1f}, {self.nz:>3.1f}, {self.Lambda:>4.1f}, {self.Omega:>4.1f}"
-        return f"{index_str} {parity_local_str} {Nillson_str}"
+        return f"{Index_str} {parity_local_str} {Nillson_str}"
     # 表头函数
     @staticmethod
     def header(beta_idx=0):
         # 使用与 __str__ 相同的列宽，确保表头与数据严格对齐, number 参数用于指定表头中的索引列标题
         num_str = str(beta_idx) if beta_idx > 0 else ""
-        index_str = f"{'Index'+num_str:>6})"
+        Index_str = f"{'Index'+num_str:>6})"
         parity_local_str = f"{'π'+num_str:>2} ({'Idx'+num_str:>4})"
         Nillson_str = f"{'N'+num_str:>4}, {'nz'+num_str:>3}, {'Λ'+num_str:>4}, {'Ω'+num_str:>4}"
-        return f"{index_str} {parity_local_str} {Nillson_str}"
+        return f"{Index_str} {parity_local_str} {Nillson_str}"
 
 
     # 比较函数, 对比差别, 返回差别大小
     def compare(self, other):
-        index_diff = abs(self.Index - other.Index)
+        Index_diff = abs(self.Index - other.Index)
         N_diff      = abs(self.N - other.N)
         nz_diff    = abs(self.nz - other.nz)
         Lambda_diff = abs(self.Lambda - other.Lambda)
         Omega_diff  = abs(self.Omega - other.Omega) 
         if self.parity != other.parity:
             return float('inf')  # 无穷大表示完全不同
-        if index_diff > 5:
+        if Index_diff > 5:
             return float('inf')  # 索引差别过大表示完全不同
         if N_diff > 1.0 :
             return float('inf')  # N差别过大表示完全不同
@@ -123,13 +123,13 @@ def match_ThreeLevelData_list(Fermi_Level_list, ThreeLevel_list):
                 best_diff3 = diff3
                 best3 = three_level.level3
         if best_diff1 == float('inf'):
-            print(f"警告: 无法找到与费米面能级 {fermi_level.index}) 匹配的 level1 能级")
+            print(f"警告: 无法找到与费米面能级 {fermi_level.Index}) 匹配的 level1 能级")
             continue
         if best_diff2 == float('inf'):
-            print(f"警告: 无法找到与费米面能级 {fermi_level.index}) 匹配的 level2 能级")
+            print(f"警告: 无法找到与费米面能级 {fermi_level.Index}) 匹配的 level2 能级")
             continue
         if best_diff3 == float('inf'):
-            print(f"警告: 无法找到与费米面能级 {fermi_level.index}) 匹配的 level3 能级")
+            print(f"警告: 无法找到与费米面能级 {fermi_level.Index}) 匹配的 level3 能级")
             continue
         matched_ThreeLevel_list.append(ThreeLevelData(best1, best2, best3))
     return matched_ThreeLevel_list

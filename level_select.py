@@ -57,14 +57,14 @@ def read_ThreeLevelList_from_file(input_path):
         for beta_idx in range(3):
             real_idx = beta_idx + 1
             energy = 0.0
-            index   = int(dict_data[f"Index{real_idx}"])
+            Index   = int(dict_data[f"Index{real_idx}"])
             parity  = str(dict_data[f"π{real_idx}"])
             Idx     = int(dict_data[f"Idx{real_idx}"])
             N       = float(dict_data[f"N{real_idx}"])
             nz      = float(dict_data[f"nz{real_idx}"])
             Lambda  = float(dict_data[f"Λ{real_idx}"])
             Omega   = float(dict_data[f"Ω{real_idx}"])
-            level   = LevelData(index, energy, parity, Idx, N, nz, Lambda, Omega)
+            level   = LevelData(Index, energy, parity, Idx, N, nz, Lambda, Omega)
             levels.append(level)
         ThreeLevel = ThreeLevelData(levels[0], levels[1], levels[2])
         ThreeLevelList.append(ThreeLevel)
@@ -143,7 +143,7 @@ def Select_FermiThreeLevelList(proton_num, neutron_num, hkout_path, level_range=
     n_ThreeFermiList = read_ThreeLevelList_from_file(scripts_dir / n_fermi_name)
     print(f"修复后的【质子能级】:")
     p_ThreeFermiList = read_ThreeLevelList_from_file(scripts_dir / p_fermi_name)
-    
+
     return n_ThreeFermiList, p_ThreeFermiList
 
 

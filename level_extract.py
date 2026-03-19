@@ -33,7 +33,7 @@ def find_line_numbers(file_path, keyword):
 
 
 # 数据匹配字段: 
-# index)  energy  parity  (Idx)  N, n_z, Lambda, Omega
+# Index)  energy  parity  (Idx)  N, n_z, Lambda, Omega
 #    15)  -.2869E+02  - (  8)   3.5, 0.7, 2.4, 2.50      
 #   133)  0.5730E+00  - ( 69)   7.0, 4.5, 0.4, 0.50
 int_pattern = r"\d+"
