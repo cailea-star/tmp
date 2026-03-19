@@ -40,8 +40,8 @@ def Indexs2blocking(n1Index, n2Index, p1Index, p2Index, n_ThreeFermiList, p_Thre
     blocking3 = blocking_levels.copy()
     if n1Index != 0:
         for n1 in range(len(n_ThreeFermiList)):
-            if n_ThreeFermiList[n1].level1.index == n1Index: break
-        if n_ThreeFermiList[n1].level1.index != n1Index: raise IndexError("n1Index")
+            if n_ThreeFermiList[n1].level1.Index == n1Index: break
+        if n_ThreeFermiList[n1].level1.Index != n1Index: raise IndexError("n1Index")
         n1_parity = n_ThreeFermiList[n1].level1.parity
         if n1_parity == "+":
             blocking1["n1_PP="] = n_ThreeFermiList[n1].level1.Idx
@@ -53,8 +53,8 @@ def Indexs2blocking(n1Index, n2Index, p1Index, p2Index, n_ThreeFermiList, p_Thre
             blocking3["n1_NP="] = n_ThreeFermiList[n1].level3.Idx
     if n2Index != 0:
         for n2 in range(len(n_ThreeFermiList)):
-            if n_ThreeFermiList[n2].level1.index == n2Index: break
-        if n_ThreeFermiList[n2].level1.index != n2Index: raise IndexError("n2Index")
+            if n_ThreeFermiList[n2].level1.Index == n2Index: break
+        if n_ThreeFermiList[n2].level1.Index != n2Index: raise IndexError("n2Index")
         n2_parity = n_ThreeFermiList[n2].level1.parity
         if n2_parity == "+":
             blocking1["n2_PP="] = n_ThreeFermiList[n2].level1.Idx
@@ -66,8 +66,8 @@ def Indexs2blocking(n1Index, n2Index, p1Index, p2Index, n_ThreeFermiList, p_Thre
             blocking3["n2_NP="] = n_ThreeFermiList[n2].level3.Idx
     if p1Index != 0:
         for p1 in range(len(p_ThreeFermiList)):
-            if p_ThreeFermiList[p1].level1.index == p1Index: break
-        if p_ThreeFermiList[p1].level1.index != p1Index: raise IndexError("p1Index")
+            if p_ThreeFermiList[p1].level1.Index == p1Index: break
+        if p_ThreeFermiList[p1].level1.Index != p1Index: raise IndexError("p1Index")
         p1_parity = p_ThreeFermiList[p1].level1.parity
         if p1_parity == "+":
             blocking1["p1_PP="] = p_ThreeFermiList[p1].level1.Idx
@@ -79,8 +79,8 @@ def Indexs2blocking(n1Index, n2Index, p1Index, p2Index, n_ThreeFermiList, p_Thre
             blocking3["p1_NP="] = p_ThreeFermiList[p1].level3.Idx
     if p2Index != 0:
         for p2 in range(len(p_ThreeFermiList)):
-            if p_ThreeFermiList[p2].level1.index == p2Index: break
-        if p_ThreeFermiList[p2].level1.index != p2Index: raise IndexError("p2Index")
+            if p_ThreeFermiList[p2].level1.Index == p2Index: break
+        if p_ThreeFermiList[p2].level1.Index != p2Index: raise IndexError("p2Index")
         p2_parity = p_ThreeFermiList[p2].level1.parity
         if p2_parity == "+":
             blocking1["p2_PP="] = p_ThreeFermiList[p2].level1.Idx
@@ -93,7 +93,7 @@ def Indexs2blocking(n1Index, n2Index, p1Index, p2Index, n_ThreeFermiList, p_Thre
     return blocking1, blocking2, blocking3
 
 
-def replace_blocking_levels(blocking, index, hk_file_path):
+def replace_blocking_levels(blocking, Index, hk_file_path):
     """替换run.hk中对应块(1,2,3)的阻塞参数
     """
     blocking_count = {key: 0 for key in blocking}
@@ -104,7 +104,7 @@ def replace_blocking_levels(blocking, index, hk_file_path):
         for key in blocking.keys():
             if line.strip().startswith(key):
                 blocking_count[key] += 1
-                if blocking_count[key] == index:
+                if blocking_count[key] == Index:
                     lines[i] = key + str(blocking[key]) + '\n'
                 break
 
