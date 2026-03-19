@@ -16,6 +16,7 @@ from replace_content import Indexs2blocking
 
 
 ROOT_DIR = Path(__file__).parent.parent
+print(f"ROOT_DIR: {ROOT_DIR}")
 sh_file_path = str(ROOT_DIR / "run.sh")
 hk_file_path = str(ROOT_DIR / "run.hk")
 log_file_path = str(ROOT_DIR / "run.log")
