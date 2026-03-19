@@ -87,8 +87,8 @@ def N_GetFermiThreeLevelList(proton_num, neutron_num, hkout_path, level_range=10
     n_ThreeFermiList = match_ThreeLevelData_list(n1_fermi_list, n_ThreeLevelList)
 
     print(ThreeLevelData.header())
-    for i in range(10):
-        print(n_ThreeFermiList[i])
+    for n_ThreeLeval in n_ThreeFermiList:
+        print(n_ThreeLeval)
     return n_ThreeFermiList
 
 
@@ -105,12 +105,12 @@ def P_GetFermiThreeLevelList(proton_num, neutron_num, hkout_path, level_range=10
     p_ThreeFermiList = match_ThreeLevelData_list(p1_fermi_list, p_ThreeLevelList)
 
     print(ThreeLevelData.header())
-    for i in range(10):
-        print(p_ThreeFermiList[i])
+    for p_ThreeLeval in p_ThreeFermiList:
+        print(p_ThreeLeval)
     return p_ThreeFermiList
 
 
-def Get_FermiThreeLevelList_manual(proton_num, neutron_num, hkout_path, level_range=10):
+def Select_FermiThreeLevelList(proton_num, neutron_num, hkout_path, level_range=10):
     """写入费米面附近的能级列表到文件, 以便用户手动选择匹配的能级, 然后读取用户选择的能级列表, 返回一个包含 ThreeLevelData 对象的列表
     return: n_ThreeFermiList, p_ThreeFermiList
     """
@@ -137,6 +137,14 @@ def Get_FermiThreeLevelList_manual(proton_num, neutron_num, hkout_path, level_ra
     print("正在读取用户选择的能级列表...")
     n_ThreeFermiList = read_ThreeLevelList_from_file(scripts_dir / n_fermi_name)
     p_ThreeFermiList = read_ThreeLevelList_from_file(scripts_dir / p_fermi_name)
+    print(f"修复后的【中子能级】:")
+    print(ThreeLevelData.header())
+    for n_ThreeLeval in n_ThreeFermiList:
+        print(n_ThreeLeval)
+    print(f"修复后的【质子能级】:")
+    print(ThreeLevelData.header())
+    for p_ThreeLeval in p_ThreeFermiList:
+        print(p_ThreeLeval)
     return n_ThreeFermiList, p_ThreeFermiList
 
 
@@ -147,5 +155,4 @@ if __name__ == "__main__":
 
     level_range = 10
     hkout_path = "hk.out"
-    N_GetFermiThreeLevelList(proton_num, neutron_num, hkout_path, level_range)
-    P_GetFermiThreeLevelList(proton_num, neutron_num, hkout_path, level_range)
+    Select_FermiThreeLevelList(proton_num, neutron_num, hkout_path, level_range)
