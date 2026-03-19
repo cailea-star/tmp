@@ -54,10 +54,10 @@ def extract_level_in_line(line_string):
     data_blocks = []
     for match in matches:
         thisblock = LevelData(
-            index=int(match[0]),
+            Index=int(match[0]),
             energy=float(match[1]),
             parity=match[2],
-            parity_index=int(match[3]),
+            Idx=int(match[3]),
             N=float(match[4]),
             nz=float(match[5]),
             Lambda=float(match[6]),
@@ -85,7 +85,7 @@ def extract_level_list_in_block(file_path, start_line):
             if isend:
                 break
     # 排序
-    level_block.sort(key=lambda x: x.index)
+    level_block.sort(key=lambda x: x.Index)
     return level_block
 
 
