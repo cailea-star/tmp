@@ -12,8 +12,6 @@
 # - replace_sh_NZ: 替换 run.sh 中 "Z=" 与 "N=" 开头的行，直接覆盖为 "Z={Z}" 与 "N={N}"。
 
 
-import os
-import re
 import time
 from pathlib import Path
 from level_select import Select_FermiThreeLevelList

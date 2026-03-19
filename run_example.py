@@ -7,7 +7,6 @@
 # - run_sh_command: 后台执行 run.sh 脚本并返回 process 对象。
 # - run_example: 根据给定的参数索引，生成阻塞参数组合，
 
-import time
 from pathlib import Path
 from level_select import Select_FermiThreeLevelList
 from replace_content import replace_blocking_levels

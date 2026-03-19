@@ -12,8 +12,6 @@
 # - P_extract_ThreeLevelList_in_file: 提取文件中全部的质子能级数据块，返回一个包含 ThreeLevelData 对象的列表。
 
 import re
-import math
-import numpy as np
 from level_define import LevelData, ThreeLevelData
 
 
