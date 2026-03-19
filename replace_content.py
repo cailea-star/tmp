@@ -16,7 +16,7 @@ import os
 import re
 import time
 from pathlib import Path
-from level_select import n_GetFermiThreeLevelList, p_GetFermiThreeLevelList
+from level_select import N_GetFermiThreeLevelList, P_GetFermiThreeLevelList
 
 
 KEY_SH_COMMANDS = ["run.hk", "run.mp"]
@@ -197,8 +197,8 @@ if __name__ == "__main__":
 
 
     # 获取费米面附近的三个单粒子态列表
-    n_ThreeFermiList = n_GetFermiThreeLevelList(proton_num, neutron_num, out_file_path, level_range=level_range, is_manual_selection=False)
-    p_ThreeFermiList = p_GetFermiThreeLevelList(proton_num, neutron_num, out_file_path, level_range=level_range, is_manual_selection=False)
+    n_ThreeFermiList = N_GetFermiThreeLevelList(proton_num, neutron_num, out_file_path, level_range=level_range, is_manual_selection=False)
+    p_ThreeFermiList = P_GetFermiThreeLevelList(proton_num, neutron_num, out_file_path, level_range=level_range, is_manual_selection=False)
 
     # 运行示例
     example_list = [
