@@ -9,7 +9,7 @@
 
 import time
 from pathlib import Path
-from level_select import N_GetFermiThreeLevelList, P_GetFermiThreeLevelList
+from level_select import Select_FermiThreeLevelList
 from replace_content import replace_blocking_levels
 from replace_content import replace_sh_command, replace_sh_NZ
 from replace_content import replace_hk_startB4, replace_hk_params
@@ -70,8 +70,7 @@ if __name__ == "__main__":
     replace_sh_NZ(proton_num, neutron_num, sh_file_path)
 
     # 获取费米面附近的三个单粒子态列表
-    n_ThreeFermiList = N_GetFermiThreeLevelList(proton_num, neutron_num, out_file_path, level_range=level_range, is_manual_selection=False)
-    p_ThreeFermiList = P_GetFermiThreeLevelList(proton_num, neutron_num, out_file_path, level_range=level_range, is_manual_selection=False)
+    n_ThreeFermiList, p_ThreeFermiList = Select_FermiThreeLevelList(proton_num, neutron_num, out_file_path, level_range)
 
     # 运行示例
     example_list = [
