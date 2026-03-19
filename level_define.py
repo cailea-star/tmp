@@ -11,7 +11,7 @@
 
 # 设计数据块结构
 class LevelData:
-    index: int
+    Index: int
     energy: float
     parity: str
     parity_index: int
@@ -21,7 +21,7 @@ class LevelData:
     Omega: float
 
     def __init__(self, index, energy, parity, parity_index, N, nz, Lambda, Omega):
-            self.index = index
+            self.Index = index
             self.energy = energy
             self.parity = parity
             self.parity_index = parity_index
@@ -33,7 +33,7 @@ class LevelData:
     # 打印函数
     def __str__(self):
         # 设置宽度和格式（与 header 保持一致的列宽）
-        index_str = f"{self.index:>6})"
+        index_str = f"{self.Index:>6})"
         parity_local_str = f"{self.parity:>2} ({self.parity_index:>4})"
         Nillson_str = f"{self.N:>3.1f}, {self.nz:>3.1f}, {self.Lambda:>3.1f}, {self.Omega:>4.2f}"
         return f"{index_str} {parity_local_str} {Nillson_str}"
@@ -50,7 +50,7 @@ class LevelData:
 
     # 比较函数, 对比差别, 返回差别大小
     def compare(self, other):
-        index_diff = abs(self.index - other.index)
+        index_diff = abs(self.Index - other.Index)
         N_diff      = abs(self.N - other.N)
         nz_diff    = abs(self.nz - other.nz)
         Lambda_diff = abs(self.Lambda - other.Lambda)
