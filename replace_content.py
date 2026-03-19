@@ -44,52 +44,52 @@ def Indexs2blocking(n1Index, n2Index, p1Index, p2Index, n_ThreeFermiList, p_Thre
         if n_ThreeFermiList[n1].level1.index != n1Index: raise IndexError("n1Index")
         n1_parity = n_ThreeFermiList[n1].level1.parity
         if n1_parity == "+":
-            blocking1["n1_PP="] = n_ThreeFermiList[n1].level1.parity_index
-            blocking2["n1_PP="] = n_ThreeFermiList[n1].level2.parity_index
-            blocking3["n1_PP="] = n_ThreeFermiList[n1].level3.parity_index
+            blocking1["n1_PP="] = n_ThreeFermiList[n1].level1.Idx
+            blocking2["n1_PP="] = n_ThreeFermiList[n1].level2.Idx
+            blocking3["n1_PP="] = n_ThreeFermiList[n1].level3.Idx
         else:
-            blocking1["n1_NP="] = n_ThreeFermiList[n1].level1.parity_index
-            blocking2["n1_NP="] = n_ThreeFermiList[n1].level2.parity_index
-            blocking3["n1_NP="] = n_ThreeFermiList[n1].level3.parity_index
+            blocking1["n1_NP="] = n_ThreeFermiList[n1].level1.Idx
+            blocking2["n1_NP="] = n_ThreeFermiList[n1].level2.Idx
+            blocking3["n1_NP="] = n_ThreeFermiList[n1].level3.Idx
     if n2Index != 0:
         for n2 in range(len(n_ThreeFermiList)):
             if n_ThreeFermiList[n2].level1.index == n2Index: break
         if n_ThreeFermiList[n2].level1.index != n2Index: raise IndexError("n2Index")
         n2_parity = n_ThreeFermiList[n2].level1.parity
         if n2_parity == "+":
-            blocking1["n2_PP="] = n_ThreeFermiList[n2].level1.parity_index
-            blocking2["n2_PP="] = n_ThreeFermiList[n2].level2.parity_index
-            blocking3["n2_PP="] = n_ThreeFermiList[n2].level3.parity_index
+            blocking1["n2_PP="] = n_ThreeFermiList[n2].level1.Idx
+            blocking2["n2_PP="] = n_ThreeFermiList[n2].level2.Idx
+            blocking3["n2_PP="] = n_ThreeFermiList[n2].level3.Idx
         else:
-            blocking1["n2_NP="] = n_ThreeFermiList[n2].level1.parity_index
-            blocking2["n2_NP="] = n_ThreeFermiList[n2].level2.parity_index
-            blocking3["n2_NP="] = n_ThreeFermiList[n2].level3.parity_index
+            blocking1["n2_NP="] = n_ThreeFermiList[n2].level1.Idx
+            blocking2["n2_NP="] = n_ThreeFermiList[n2].level2.Idx
+            blocking3["n2_NP="] = n_ThreeFermiList[n2].level3.Idx
     if p1Index != 0:
         for p1 in range(len(p_ThreeFermiList)):
             if p_ThreeFermiList[p1].level1.index == p1Index: break
         if p_ThreeFermiList[p1].level1.index != p1Index: raise IndexError("p1Index")
         p1_parity = p_ThreeFermiList[p1].level1.parity
         if p1_parity == "+":
-            blocking1["p1_PP="] = p_ThreeFermiList[p1].level1.parity_index
-            blocking2["p1_PP="] = p_ThreeFermiList[p1].level2.parity_index
-            blocking3["p1_PP="] = p_ThreeFermiList[p1].level3.parity_index
+            blocking1["p1_PP="] = p_ThreeFermiList[p1].level1.Idx
+            blocking2["p1_PP="] = p_ThreeFermiList[p1].level2.Idx
+            blocking3["p1_PP="] = p_ThreeFermiList[p1].level3.Idx
         else:
-            blocking1["p1_NP="] = p_ThreeFermiList[p1].level1.parity_index
-            blocking2["p1_NP="] = p_ThreeFermiList[p1].level2.parity_index
-            blocking3["p1_NP="] = p_ThreeFermiList[p1].level3.parity_index
+            blocking1["p1_NP="] = p_ThreeFermiList[p1].level1.Idx
+            blocking2["p1_NP="] = p_ThreeFermiList[p1].level2.Idx
+            blocking3["p1_NP="] = p_ThreeFermiList[p1].level3.Idx
     if p2Index != 0:
         for p2 in range(len(p_ThreeFermiList)):
             if p_ThreeFermiList[p2].level1.index == p2Index: break
         if p_ThreeFermiList[p2].level1.index != p2Index: raise IndexError("p2Index")
         p2_parity = p_ThreeFermiList[p2].level1.parity
         if p2_parity == "+":
-            blocking1["p2_PP="] = p_ThreeFermiList[p2].level1.parity_index
-            blocking2["p2_PP="] = p_ThreeFermiList[p2].level2.parity_index
-            blocking3["p2_PP="] = p_ThreeFermiList[p2].level3.parity_index
+            blocking1["p2_PP="] = p_ThreeFermiList[p2].level1.Idx
+            blocking2["p2_PP="] = p_ThreeFermiList[p2].level2.Idx
+            blocking3["p2_PP="] = p_ThreeFermiList[p2].level3.Idx
         else:
-            blocking1["p2_NP="] = p_ThreeFermiList[p2].level1.parity_index
-            blocking2["p2_NP="] = p_ThreeFermiList[p2].level2.parity_index
-            blocking3["p2_NP="] = p_ThreeFermiList[p2].level3.parity_index
+            blocking1["p2_NP="] = p_ThreeFermiList[p2].level1.Idx
+            blocking2["p2_NP="] = p_ThreeFermiList[p2].level2.Idx
+            blocking3["p2_NP="] = p_ThreeFermiList[p2].level3.Idx
     return blocking1, blocking2, blocking3
 
 
