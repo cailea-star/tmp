@@ -19,7 +19,7 @@ from level_extract import N_extract_ThreeLevelList_in_file, P_extract_ThreeLevel
 def write_ThreeLevelList_to_file(ThreeLevelData_list, output_path):
     """将能级列表写入文件, 以便后续解析和使用
     """
-    with open(output_path, 'w') as f:
+    with open(output_path, 'w', encoding='utf-8') as f:
         f.write(ThreeLevelData.header() + "\n")
         for data in ThreeLevelData_list:
             f.write(str(data) + "\n")
@@ -33,7 +33,7 @@ def read_ThreeLevelList_from_file(input_path):
     3. 注意处理表头, 以便后续使用字典解析数据行, 以便后续解析
     """
     ThreeLevelList = []
-    with open(input_path, 'r') as f:
+    with open(input_path, 'r', encoding='utf-8') as f:
         lines = f.readlines()
     # 1 清洗表格的分割符号, 以便后续解析
     for i in range(len(lines)):
